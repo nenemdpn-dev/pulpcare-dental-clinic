@@ -1,0 +1,136 @@
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { CheckCircle2, Award, Heart, Users, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Layout from "@/components/Layout";
+import heroImage from "@/assets/hero-dental.jpg";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
+
+const values = [
+  { icon: Heart, title: "Patient First", desc: "Every decision we make starts with what's best for our patients." },
+  { icon: Award, title: "Clinical Excellence", desc: "We follow international best practices and continuously update our skills." },
+  { icon: Users, title: "Community Focus", desc: "We're proud to serve the Lagos community with accessible, affordable dental care." },
+];
+
+const About = () => {
+  return (
+    <Layout>
+      {/* Hero */}
+      <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <img src={heroImage} alt="" className="w-full h-full object-cover" />
+        </div>
+        <div className="relative container-narrow mx-auto px-4 md:px-8 text-center">
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl font-bold mb-4 !text-primary-foreground">
+            About Pulpcare Dental Clinic
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }} className="text-lg opacity-90 max-w-2xl mx-auto">
+            A modern dental practice built on trust, expertise, and genuine care for every patient.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Story */}
+      <section className="section-padding bg-card">
+        <div className="container-narrow mx-auto">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div variants={fadeInUp}>
+              <p className="text-primary font-medium text-sm tracking-widest uppercase mb-3">Our Story</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Building Healthier Smiles in Lagos Since 2014</h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Pulpcare Dental Clinic was founded by Dr. Chris with a simple but powerful vision: to make quality dental care accessible, comfortable, and affordable for every Nigerian. What started as a small practice has grown into one of Lagos's most trusted dental clinics.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                We understand that visiting the dentist can be stressful. That's why we've built an environment where patients feel welcome, informed, and at ease. From the moment you walk in, our friendly team ensures you receive personalised attention and the highest standard of care.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                Our clinic is equipped with modern dental technology, and our team regularly undergoes training to stay current with the latest techniques and best practices in dentistry.
+              </p>
+            </motion.div>
+            <motion.div variants={fadeInUp}>
+              <div className="aspect-[4/3] rounded-2xl bg-muted overflow-hidden shadow-xl">
+                <img src={heroImage} alt="Pulpcare Dental Clinic interior" className="w-full h-full object-cover" />
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Dr. Chris */}
+      <section className="section-padding bg-pulpcare-light">
+        <div className="container-narrow mx-auto">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div variants={fadeInUp} className="order-2 md:order-1">
+              <div className="aspect-square max-w-md mx-auto rounded-2xl bg-muted overflow-hidden shadow-xl flex items-center justify-center">
+                <div className="text-center p-8">
+                  <Users className="w-16 h-16 text-primary mx-auto mb-4" />
+                  <p className="text-muted-foreground font-medium">Dr. Chris Photo</p>
+                  <p className="text-sm text-muted-foreground">Original clinic photo will be placed here</p>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div variants={fadeInUp} className="order-1 md:order-2">
+              <p className="text-primary font-medium text-sm tracking-widest uppercase mb-3">Meet the Doctor</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Dr. Chris — Lead Dentist</h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Dr. Chris is a highly skilled and compassionate dentist with over 10 years of experience in general and cosmetic dentistry. He graduated from one of Nigeria's top dental schools and has completed additional training in advanced restorative and cosmetic procedures.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                Known for his calm demeanour and thorough approach, Dr. Chris takes the time to explain every procedure, answer your questions, and ensure you feel confident about your treatment plan. He believes that a well-informed patient is a happier patient.
+              </p>
+              <div className="space-y-3">
+                {["BDS (Bachelor of Dental Surgery)", "Member, Nigerian Dental Association", "Certified in Advanced Cosmetic Dentistry", "Over 5,000 successful procedures"].map((item) => (
+                  <div key={item} className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-5 h-5 text-pulpcare-success shrink-0" />
+                    <span className="text-sm font-medium">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="section-padding bg-card">
+        <div className="container-narrow mx-auto text-center">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+            <motion.p variants={fadeInUp} className="text-primary font-medium text-sm tracking-widest uppercase mb-3">Our Values</motion.p>
+            <motion.h2 variants={fadeInUp} className="text-3xl md:text-4xl font-bold mb-12">What Drives Us Every Day</motion.h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {values.map((v) => (
+                <motion.div key={v.title} variants={fadeInUp} className="p-6">
+                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <v.icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-2">{v.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{v.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-16 bg-primary text-primary-foreground text-center">
+        <div className="container-narrow mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-4 !text-primary-foreground">Experience the Pulpcare Difference</h2>
+          <p className="text-lg opacity-90 max-w-xl mx-auto mb-8">Book a visit today and see why thousands of Lagos residents trust us with their smiles.</p>
+          <Link to="/book-appointment">
+            <Button size="lg" variant="secondary" className="rounded-full px-8 font-semibold">
+              Book Appointment <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+        </div>
+      </section>
+    </Layout>
+  );
+};
+
+export default About;
