@@ -1,13 +1,26 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, Phone, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import logo from "@/assets/pulpcare-logo.png";
+
+const serviceLinks = [
+  { label: "General Dentistry", path: "/services/general-dentistry" },
+  { label: "Dental Cleaning", path: "/services/dental-cleaning" },
+  { label: "Tooth Extraction", path: "/services/tooth-extraction" },
+  { label: "Teeth Whitening", path: "/services/teeth-whitening" },
+  { label: "Paediatric Dentistry", path: "/services/paediatric-dentistry" },
+  { label: "Root Canal Treatment", path: "/services/root-canal" },
+  { label: "Cosmetic Dentistry", path: "/services/cosmetic-dentistry" },
+  { label: "Emergency Dental Care", path: "/services/emergency-dental-care" },
+];
 
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About Us", path: "/about" },
-  { label: "Our Services", path: "/services" },
+  { label: "Our Services", path: "/services", hasDropdown: true },
   { label: "Blog", path: "/blog" },
   { label: "Contact", path: "/contact" },
 ];
@@ -15,6 +28,7 @@ const navLinks = [
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [megaOpen, setMegaOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -22,6 +36,10 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    setMegaOpen(false);
+  }, [location.pathname]);
 
   return (
     <header
@@ -34,9 +52,7 @@ const Header = () => {
       <div className="container-narrow mx-auto flex items-center justify-between h-20 px-4 md:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-lg">P</span>
-          </div>
+          <img src={logo} alt="Pulpcare Dental Clinic Logo" className="h-12 w-auto" />
           <div className="flex flex-col">
             <span className="font-bold text-lg leading-tight text-foreground">Pulpcare</span>
             <span className="text-xs text-muted-foreground leading-tight">Dental Clinic</span>
@@ -44,32 +60,77 @@ const Header = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-7">
           {navLinks.map((link) => (
-            <Link
+            <div
               key={link.path}
-              to={link.path}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === link.path
-                  ? "text-primary"
-                  : "text-foreground"
-              }`}
+              className="relative"
+              onMouseEnter={() => link.hasDropdown && setMegaOpen(true)}
+              onMouseLeave={() => link.hasDropdown && setMegaOpen(false)}
             >
-              {link.label}
-            </Link>
+              <Link
+                to={link.path}
+                className={`text-sm font-medium transition-colors hover:text-primary inline-flex items-center gap-1 py-2 ${
+                  location.pathname === link.path || (link.hasDropdown && location.pathname.startsWith("/services"))
+                    ? "text-primary"
+                    : "text-foreground"
+                }`}
+              >
+                {link.label}
+                {link.hasDropdown && (
+                  <motion.span animate={{ rotate: megaOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </motion.span>
+                )}
+              </Link>
+
+              {/* Mega Dropdown */}
+              {link.hasDropdown && (
+                <AnimatePresence>
+                  {megaOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2"
+                    >
+                      <div className="bg-card rounded-xl shadow-2xl border border-border p-4 w-[520px] grid grid-cols-2 gap-1">
+                        {serviceLinks.map((s) => (
+                          <Link
+                            key={s.path}
+                            to={s.path}
+                            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors"
+                          >
+                            <div className="w-2 h-2 rounded-full bg-primary/40" />
+                            {s.label}
+                          </Link>
+                        ))}
+                        <Link
+                          to="/services"
+                          className="col-span-2 mt-2 pt-2 border-t border-border text-center text-sm font-semibold text-primary hover:underline"
+                        >
+                          View All Services →
+                        </Link>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              )}
+            </div>
           ))}
         </nav>
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-3">
-          <a href="tel:+2348012345678" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+          <a href="tel:08139994755" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors">
             <Phone className="w-4 h-4" />
-            <span>+234 801 234 5678</span>
+            <span>0813 999 4755</span>
           </a>
           <Link to="/book-appointment">
-            <Button className="rounded-full px-6 font-semibold">
-              Book Appointment
-            </Button>
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+              <Button className="rounded-full px-6 font-semibold">Book Appointment</Button>
+            </motion.div>
           </Link>
         </div>
 
@@ -77,34 +138,42 @@ const Header = () => {
         <div className="lg:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="w-6 h-6" />
-              </Button>
+              <Button variant="ghost" size="icon"><Menu className="w-6 h-6" /></Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-80 bg-card">
-              <div className="flex flex-col gap-6 mt-8">
+            <SheetContent side="right" className="w-80 bg-card overflow-y-auto">
+              <div className="flex flex-col gap-4 mt-8">
                 {navLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    onClick={() => setOpen(false)}
-                    className={`text-lg font-medium transition-colors hover:text-primary ${
-                      location.pathname === link.path
-                        ? "text-primary"
-                        : "text-foreground"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
+                  <div key={link.path}>
+                    <Link
+                      to={link.path}
+                      onClick={() => !link.hasDropdown && setOpen(false)}
+                      className={`text-lg font-medium transition-colors hover:text-primary block py-1 ${
+                        location.pathname === link.path ? "text-primary" : "text-foreground"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                    {link.hasDropdown && (
+                      <div className="ml-4 mt-2 space-y-1">
+                        {serviceLinks.map((s) => (
+                          <Link
+                            key={s.path}
+                            to={s.path}
+                            onClick={() => setOpen(false)}
+                            className="block text-sm text-muted-foreground hover:text-primary py-1.5"
+                          >
+                            {s.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
                 <Link to="/book-appointment" onClick={() => setOpen(false)}>
-                  <Button className="w-full rounded-full font-semibold mt-4">
-                    Book Appointment
-                  </Button>
+                  <Button className="w-full rounded-full font-semibold mt-4">Book Appointment</Button>
                 </Link>
-                <a href="tel:+2348012345678" className="flex items-center gap-2 text-muted-foreground hover:text-primary">
-                  <Phone className="w-4 h-4" />
-                  <span>+234 801 234 5678</span>
+                <a href="tel:08139994755" className="flex items-center gap-2 text-muted-foreground hover:text-primary">
+                  <Phone className="w-4 h-4" /><span>0813 999 4755</span>
                 </a>
               </div>
             </SheetContent>
