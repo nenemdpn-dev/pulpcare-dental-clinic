@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import {
   Shield, Heart, Clock, Star, Award, Users, Stethoscope,
   Smile, Sparkles, Baby, Syringe, Zap, ArrowRight, CheckCircle2,
@@ -8,16 +9,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
-import heroImage from "@/assets/hero-dental.jpg";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
-
-const stagger = {
-  visible: { transition: { staggerChildren: 0.1 } },
-};
+import ScrollReveal from "@/components/ScrollReveal";
+import MicroButton from "@/components/MicroButton";
+import clinicReception from "@/assets/clinic-reception.jpg";
+import clinicWaiting from "@/assets/clinic-waiting-room.jpg";
+import patientSmile from "@/assets/patient-smile.jpg";
+import clinicTreatment from "@/assets/clinic-treatment.jpg";
 
 const services = [
   { icon: Stethoscope, title: "General Dentistry", desc: "Comprehensive check-ups, fillings, and preventive care for your whole family.", path: "/services/general-dentistry" },
@@ -26,7 +23,7 @@ const services = [
   { icon: Smile, title: "Teeth Whitening", desc: "Brighten your smile with our professional in-office whitening treatments.", path: "/services/teeth-whitening" },
   { icon: Baby, title: "Paediatric Dentistry", desc: "Gentle, child-friendly dental care designed to make kids feel comfortable.", path: "/services/paediatric-dentistry" },
   { icon: Heart, title: "Root Canal Treatment", desc: "Pain-free root canal therapy to save your natural teeth and relieve discomfort.", path: "/services/root-canal" },
-  { icon: Award, title: "Cosmetic Dentistry", desc: "Veneers, bonding, and smile makeovers to give you the confident smile you deserve.", path: "/services/cosmetic-dentistry" },
+  { icon: Award, title: "Cosmetic Dentistry", desc: "Veneers, bonding, and smile makeovers for the confident smile you deserve.", path: "/services/cosmetic-dentistry" },
   { icon: Zap, title: "Emergency Dental Care", desc: "Urgent dental attention when you need it most — walk-ins welcome.", path: "/services/emergency-dental-care" },
 ];
 
@@ -44,225 +41,281 @@ const testimonials = [
 ];
 
 const Index = () => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={heroImage} alt="Modern dental clinic interior at Pulpcare Dental Clinic Lagos" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-foreground/30" />
-        </div>
-        <div className="relative container-narrow mx-auto px-4 md:px-8">
+      {/* Hero Section — Parallax */}
+      <section ref={heroRef} className="relative min-h-[92vh] flex items-center overflow-hidden">
+        <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
+          <img src={clinicReception} alt="Pulpcare Dental Clinic reception in Surulere, Lagos" className="w-full h-full object-cover" />
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/75 to-foreground/20" />
+        <motion.div className="relative container-narrow mx-auto px-4 md:px-8" style={{ opacity: heroOpacity }}>
           <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={stagger}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             className="max-w-2xl text-primary-foreground"
           >
-            <motion.p variants={fadeInUp} className="text-secondary font-medium mb-3 text-sm tracking-widest uppercase">
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-secondary font-medium mb-3 text-sm tracking-widest uppercase"
+            >
               Welcome to Pulpcare Dental Clinic
             </motion.p>
-            <motion.h1 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 !text-primary-foreground">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 !text-primary-foreground"
+            >
               Your Trusted Dental Care in Lagos
             </motion.h1>
-            <motion.p variants={fadeInUp} className="text-lg md:text-xl opacity-90 mb-8 leading-relaxed">
-              Experience world-class dental care in a warm, welcoming environment. From routine check-ups to advanced treatments, we're here for your brightest smile.
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="text-lg md:text-xl opacity-90 mb-8 leading-relaxed"
+            >
+              Experience world-class dental care in a warm, welcoming environment. From routine check-ups to advanced cosmetic treatments, we're here for your brightest smile.
             </motion.p>
-            <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
+              className="flex flex-wrap gap-4"
+            >
               <Link to="/book-appointment">
-                <Button size="lg" className="rounded-full px-8 text-base font-semibold h-12">
-                  <CalendarDays className="w-5 h-5 mr-2" />
-                  Book Appointment
-                </Button>
+                <MicroButton>
+                  <Button size="lg" className="rounded-full px-8 text-base font-semibold h-12">
+                    <CalendarDays className="w-5 h-5 mr-2" />
+                    Book Appointment
+                  </Button>
+                </MicroButton>
               </Link>
               <Link to="/services">
-                <Button size="lg" variant="outline" className="rounded-full px-8 text-base font-semibold h-12 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
-                  Our Services
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
+                <MicroButton>
+                  <Button size="lg" variant="outline" className="rounded-full px-8 text-base font-semibold h-12 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+                    Our Services <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </MicroButton>
               </Link>
             </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+        >
+          <div className="w-6 h-10 border-2 border-primary-foreground/40 rounded-full flex justify-center pt-2">
+            <motion.div
+              className="w-1.5 h-1.5 bg-primary-foreground/60 rounded-full"
+              animate={{ y: [0, 12, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            />
+          </div>
+        </motion.div>
       </section>
 
-      {/* Welcome Section */}
+      {/* Welcome / About Section — Scrollytelling */}
       <section className="section-padding bg-card">
         <div className="container-narrow mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={stagger}
-            className="grid md:grid-cols-2 gap-12 items-center"
-          >
-            <motion.div variants={fadeInUp}>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <ScrollReveal direction="left">
               <p className="text-primary font-medium text-sm tracking-widest uppercase mb-3">About Our Clinic</p>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Compassionate Dental Care for the Whole Family</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                At Pulpcare Dental Clinic, we believe everyone deserves a healthy, beautiful smile. Founded by Dr. Chris, our clinic brings together modern dental technology and a deeply caring approach to give you the best experience possible.
+                At Pulpcare Dental Clinic, located in the heart of Surulere, Lagos, we believe everyone deserves a healthy, beautiful smile. Our clinic brings together modern dental technology and a deeply caring approach to give you the best experience possible.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-6">
                 Whether you need a routine cleaning, cosmetic enhancement, or emergency treatment, our experienced team is ready to help — with patience, professionalism, and a personal touch.
               </p>
               <div className="space-y-3 mb-8">
-                {["Over 10 years of dental excellence", "Modern, sterilised equipment", "Family-friendly environment", "Affordable treatment plans"].map((item) => (
-                  <div key={item} className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-5 h-5 text-pulpcare-success shrink-0" />
-                    <span className="text-sm font-medium">{item}</span>
-                  </div>
+                {["Over 10 years of dental excellence", "Modern, sterilised equipment", "Family-friendly environment", "Affordable treatment plans", "We accept HMO patients"].map((item, i) => (
+                  <ScrollReveal key={item} delay={i * 0.08} direction="left">
+                    <div className="flex items-center gap-2.5">
+                      <CheckCircle2 className="w-5 h-5 text-pulpcare-success shrink-0" />
+                      <span className="text-sm font-medium">{item}</span>
+                    </div>
+                  </ScrollReveal>
                 ))}
               </div>
               <Link to="/about">
-                <Button variant="outline" className="rounded-full px-6">
-                  Learn More About Us
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
+                <MicroButton>
+                  <Button variant="outline" className="rounded-full px-6">
+                    Learn More About Us <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </MicroButton>
               </Link>
-            </motion.div>
-            <motion.div variants={fadeInUp} className="relative">
-              <div className="aspect-[4/3] rounded-2xl bg-muted overflow-hidden shadow-xl">
-                <img src={heroImage} alt="Pulpcare Dental Clinic facility" className="w-full h-full object-cover" />
+            </ScrollReveal>
+            <ScrollReveal direction="right">
+              <div className="relative">
+                <div className="aspect-[4/3] rounded-2xl bg-muted overflow-hidden shadow-xl">
+                  <img src={clinicWaiting} alt="Pulpcare Dental Clinic waiting area" className="w-full h-full object-cover" />
+                </div>
+                <motion.div
+                  className="absolute -bottom-6 -left-6 bg-primary text-primary-foreground rounded-2xl p-6 shadow-lg"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ type: "spring", stiffness: 200, delay: 0.3 }}
+                >
+                  <div className="text-3xl font-bold">10+</div>
+                  <div className="text-sm opacity-90">Years of Excellence</div>
+                </motion.div>
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-primary text-primary-foreground rounded-2xl p-6 shadow-lg">
-                <div className="text-3xl font-bold">10+</div>
-                <div className="text-sm opacity-90">Years of Excellence</div>
-              </div>
-            </motion.div>
-          </motion.div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
       {/* Services Section */}
       <section className="section-padding bg-pulpcare-light">
         <div className="container-narrow mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={stagger}
-            className="text-center mb-12"
-          >
-            <motion.p variants={fadeInUp} className="text-primary font-medium text-sm tracking-widest uppercase mb-3">What We Offer</motion.p>
-            <motion.h2 variants={fadeInUp} className="text-3xl md:text-4xl font-bold mb-4">Comprehensive Dental Services</motion.h2>
-            <motion.p variants={fadeInUp} className="text-muted-foreground max-w-2xl mx-auto">
-              From preventive care to advanced treatments, we offer a full range of dental services to keep your smile healthy and confident.
-            </motion.p>
-          </motion.div>
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <p className="text-primary font-medium text-sm tracking-widest uppercase mb-3">What We Offer</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Comprehensive Dental Services</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                From preventive care to advanced treatments, we offer a full range of dental services to keep your smile healthy and confident.
+              </p>
+            </div>
+          </ScrollReveal>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={stagger}
-            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {services.map((service) => (
-              <motion.div key={service.title} variants={fadeInUp}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service, i) => (
+              <ScrollReveal key={service.title} delay={i * 0.06} direction="up">
                 <Link to={service.path}>
-                  <Card className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50">
-                    <CardContent className="p-6 text-center">
-                      <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                        <service.icon className="w-7 h-7 text-primary" />
-                      </div>
-                      <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{service.desc}</p>
-                    </CardContent>
-                  </Card>
+                  <motion.div whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 300 }}>
+                    <Card className="group h-full hover:shadow-xl transition-shadow duration-300 border-border/50">
+                      <CardContent className="p-6 text-center">
+                        <motion.div
+                          className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300"
+                          whileHover={{ rotate: [0, -10, 10, 0] }}
+                          transition={{ duration: 0.4 }}
+                        >
+                          <service.icon className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors" />
+                        </motion.div>
+                        <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{service.desc}</p>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 </Link>
-              </motion.div>
+              </ScrollReveal>
             ))}
-          </motion.div>
-
-          <div className="text-center mt-10">
-            <Link to="/services">
-              <Button variant="outline" className="rounded-full px-6">
-                View All Services
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
           </div>
+
+          <ScrollReveal>
+            <div className="text-center mt-10">
+              <Link to="/services">
+                <MicroButton>
+                  <Button variant="outline" className="rounded-full px-6">
+                    View All Services <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </MicroButton>
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Why Choose Us */}
       <section className="section-padding bg-card">
         <div className="container-narrow mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={stagger}
-          >
+          <ScrollReveal>
             <div className="text-center mb-12">
-              <motion.p variants={fadeInUp} className="text-primary font-medium text-sm tracking-widest uppercase mb-3">Why Pulpcare</motion.p>
-              <motion.h2 variants={fadeInUp} className="text-3xl md:text-4xl font-bold mb-4">Why Patients Choose Us</motion.h2>
+              <p className="text-primary font-medium text-sm tracking-widest uppercase mb-3">Why Pulpcare</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Patients Choose Us</h2>
             </div>
+          </ScrollReveal>
 
-            <motion.div variants={stagger} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {whyChooseUs.map((item) => (
-                <motion.div key={item.title} variants={fadeInUp} className="text-center">
-                  <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {whyChooseUs.map((item, i) => (
+              <ScrollReveal key={item.title} delay={i * 0.1} direction="scale">
+                <div className="text-center">
+                  <motion.div
+                    className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
                     <item.icon className="w-8 h-8 text-secondary" />
-                  </div>
+                  </motion.div>
                   <h3 className="font-semibold mb-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* CTA Banner */}
-      <section className="py-16 bg-primary text-primary-foreground">
-        <div className="container-narrow mx-auto px-4 md:px-8 text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={stagger}
-          >
-            <motion.h2 variants={fadeInUp} className="text-3xl md:text-4xl font-bold mb-4 !text-primary-foreground">
-              Ready for a Brighter Smile?
-            </motion.h2>
-            <motion.p variants={fadeInUp} className="text-lg opacity-90 max-w-xl mx-auto mb-8">
-              Don't wait until it hurts. Book your appointment today and let our team take care of your dental health.
-            </motion.p>
-            <motion.div variants={fadeInUp}>
+      {/* Image Showcase — Parallax */}
+      <section className="relative h-[50vh] overflow-hidden">
+        <motion.div
+          className="absolute inset-0"
+          style={{ y: useTransform(useScroll().scrollYProgress, [0, 1], [-50, 50]) }}
+        >
+          <img src={patientSmile} alt="Happy patient at Pulpcare Dental Clinic" className="w-full h-full object-cover" />
+        </motion.div>
+        <div className="absolute inset-0 bg-primary/70 flex items-center justify-center">
+          <ScrollReveal direction="scale">
+            <div className="text-center text-primary-foreground px-4">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 !text-primary-foreground">Ready for a Brighter Smile?</h2>
+              <p className="text-lg opacity-90 max-w-xl mx-auto mb-8">
+                Don't wait until it hurts. Book your appointment today and let our team take care of your dental health.
+              </p>
               <Link to="/book-appointment">
-                <Button size="lg" variant="secondary" className="rounded-full px-8 text-base font-semibold h-12">
-                  <CalendarDays className="w-5 h-5 mr-2" />
-                  Book Your Appointment Now
-                </Button>
+                <MicroButton>
+                  <Button size="lg" variant="secondary" className="rounded-full px-8 text-base font-semibold h-12">
+                    <CalendarDays className="w-5 h-5 mr-2" />
+                    Book Your Appointment Now
+                  </Button>
+                </MicroButton>
               </Link>
-            </motion.div>
-          </motion.div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Testimonials */}
       <section className="section-padding bg-card">
         <div className="container-narrow mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={stagger}
-          >
+          <ScrollReveal>
             <div className="text-center mb-12">
-              <motion.p variants={fadeInUp} className="text-primary font-medium text-sm tracking-widest uppercase mb-3">Testimonials</motion.p>
-              <motion.h2 variants={fadeInUp} className="text-3xl md:text-4xl font-bold mb-4">What Our Patients Say</motion.h2>
+              <p className="text-primary font-medium text-sm tracking-widest uppercase mb-3">Testimonials</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Patients Say</h2>
+              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <span className="font-semibold text-pulpcare-gold">4.9</span>
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-pulpcare-gold text-pulpcare-gold" />
+                  ))}
+                </div>
+                <span>on Google Reviews</span>
+              </div>
             </div>
+          </ScrollReveal>
 
-            <motion.div variants={stagger} className="grid md:grid-cols-3 gap-8">
-              {testimonials.map((t) => (
-                <motion.div key={t.name} variants={fadeInUp}>
-                  <Card className="h-full border-border/50">
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((t, i) => (
+              <ScrollReveal key={t.name} delay={i * 0.1}>
+                <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 300 }}>
+                  <Card className="h-full border-border/50 hover:shadow-lg transition-shadow">
                     <CardContent className="p-6">
                       <div className="flex gap-1 mb-4">
-                        {Array.from({ length: t.rating }).map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-pulpcare-gold text-pulpcare-gold" />
+                        {Array.from({ length: t.rating }).map((_, j) => (
+                          <Star key={j} className="w-4 h-4 fill-pulpcare-gold text-pulpcare-gold" />
                         ))}
                       </div>
                       <p className="text-muted-foreground leading-relaxed mb-4 italic">"{t.text}"</p>
@@ -270,58 +323,58 @@ const Index = () => {
                     </CardContent>
                   </Card>
                 </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Working Hours & Location */}
       <section className="section-padding bg-pulpcare-light">
         <div className="container-narrow mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={stagger}
-            className="grid md:grid-cols-2 gap-12"
-          >
-            <motion.div variants={fadeInUp}>
+          <div className="grid md:grid-cols-2 gap-12">
+            <ScrollReveal direction="left">
               <p className="text-primary font-medium text-sm tracking-widest uppercase mb-3">Visit Us</p>
               <h2 className="text-3xl font-bold mb-6">Working Hours & Location</h2>
               <div className="space-y-4 mb-8">
-                <div className="flex justify-between items-center py-3 border-b border-border">
-                  <span className="font-medium">Monday – Friday</span>
-                  <span className="text-muted-foreground">8:00 AM – 6:00 PM</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-border">
-                  <span className="font-medium">Saturday</span>
-                  <span className="text-muted-foreground">9:00 AM – 3:00 PM</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-border">
-                  <span className="font-medium">Sunday</span>
-                  <span className="text-muted-foreground">Closed</span>
-                </div>
+                {[
+                  { day: "Monday – Friday", time: "8:00 AM – 6:00 PM" },
+                  { day: "Saturday", time: "9:00 AM – 3:00 PM" },
+                  { day: "Sunday", time: "Closed" },
+                ].map((h) => (
+                  <div key={h.day} className="flex justify-between items-center py-3 border-b border-border">
+                    <span className="font-medium">{h.day}</span>
+                    <span className="text-muted-foreground">{h.time}</span>
+                  </div>
+                ))}
               </div>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                  <span>123 Medical Road, Ikeja, Lagos, Nigeria</span>
+                  <span>1 Aderibigbe Street, by Ogosco Bus Stop, Kilo, Surulere, Lagos</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-primary shrink-0" />
-                  <a href="tel:+2348012345678" className="hover:text-primary transition-colors">+234 801 234 5678</a>
+                  <a href="tel:08139994755" className="hover:text-primary transition-colors">0813 999 4755</a>
                 </div>
               </div>
-            </motion.div>
-            <motion.div variants={fadeInUp} className="rounded-2xl overflow-hidden shadow-lg bg-muted min-h-[300px] flex items-center justify-center">
-              <div className="text-center p-8">
-                <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
-                <p className="text-muted-foreground font-medium">Map Placeholder</p>
-                <p className="text-sm text-muted-foreground">Google Maps embed will appear here in the WordPress build</p>
+            </ScrollReveal>
+            <ScrollReveal direction="right">
+              <div className="rounded-2xl overflow-hidden shadow-lg min-h-[300px]">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.0!2d3.3474245!3d6.5025192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8dec987bf6a9%3A0xc9b95e8aca33ec0f!2sPulpCare%20Dental%20Clinic!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, minHeight: "300px" }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Pulpcare Dental Clinic Location"
+                  className="w-full h-full min-h-[300px]"
+                />
               </div>
-            </motion.div>
-          </motion.div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
     </Layout>
