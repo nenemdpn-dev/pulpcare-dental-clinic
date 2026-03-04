@@ -102,7 +102,7 @@ const Index = () => {
               </Link>
               <Link to="/services">
                 <MicroButton>
-                  <Button size="lg" variant="outline" className="rounded-full px-8 text-base font-semibold h-12 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+                  <Button size="lg" variant="outline" className="rounded-full px-8 text-base font-semibold h-12 bg-primary-foreground/15 border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/25">
                     Our Services <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </MicroButton>
