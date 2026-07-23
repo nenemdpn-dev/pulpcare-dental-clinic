@@ -14,7 +14,7 @@ const services = [
   { icon: Smile, title: "Teeth Whitening", desc: "Professional whitening treatments to brighten your smile safely and effectively.", slug: "teeth-whitening" },
   { icon: Baby, title: "Paediatric Dentistry", desc: "Gentle, child-friendly dental care designed to make kids feel comfortable and build healthy habits.", slug: "paediatric-dentistry" },
   { icon: Heart, title: "Root Canal Treatment", desc: "Pain-free root canal therapy to save damaged teeth and relieve infection discomfort.", slug: "root-canal" },
-  { icon: Award, title: "Cosmetic Dentistry", desc: "Veneers, bonding, orthodontics, Invisalign, and complete smile makeovers.", slug: "cosmetic-dentistry" },
+  { icon: Award, title: "Cosmetic Dentistry", desc: "Veneers, bonding, orthodontics, clear aligners, and complete smile makeovers.", slug: "cosmetic-dentistry" },
   { icon: Zap, title: "Emergency Dental Care", desc: "Urgent dental attention for injuries, severe pain, or sudden issues — walk-ins welcome.", slug: "emergency-dental-care" },
 ];
 

@@ -11,9 +11,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
 import ScrollReveal from "@/components/ScrollReveal";
 import MicroButton from "@/components/MicroButton";
-import clinicReception from "@/assets/clinic-reception.jpg";
+import clinicReception from "@/assets/dr-chris-office.jpg";
 import clinicWaiting from "@/assets/clinic-waiting-room.jpg";
-import patientSmile from "@/assets/patient-smile.jpg";
+import patientSmile from "@/assets/veneers-result.jpg";
 import clinicTreatment from "@/assets/clinic-treatment.jpg";
 
 const services = [
@@ -76,7 +76,7 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 !text-primary-foreground"
             >
-              Your Trusted Dental Care in Lagos
+              Your Trusted Dental Care in Lagos, Nigeria
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -338,9 +338,9 @@ const Index = () => {
               <h2 className="text-3xl font-bold mb-6">Working Hours & Location</h2>
               <div className="space-y-4 mb-8">
                 {[
-                  { day: "Monday – Friday", time: "8:00 AM – 6:00 PM" },
-                  { day: "Saturday", time: "9:00 AM – 3:00 PM" },
-                  { day: "Sunday", time: "Closed" },
+                  { day: "Monday – Friday", time: "8:00 AM – 7:00 PM" },
+                  { day: "Saturday", time: "9:00 AM – 6:00 PM" },
+                  { day: "Sunday", time: "12:00 PM – 4:00 PM" },
                 ].map((h) => (
                   <div key={h.day} className="flex justify-between items-center py-3 border-b border-border">
                     <span className="font-medium">{h.day}</span>

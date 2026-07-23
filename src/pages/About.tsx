@@ -6,8 +6,8 @@ import Layout from "@/components/Layout";
 import ScrollReveal from "@/components/ScrollReveal";
 import MicroButton from "@/components/MicroButton";
 import clinicWaiting from "@/assets/clinic-waiting-room.jpg";
-import clinicReception from "@/assets/clinic-reception.jpg";
-import dentistPatient from "@/assets/dentist-patient.jpg";
+import clinicReception from "@/assets/dr-chris-office.jpg";
+import dentistPatient from "@/assets/dr-chris-scan.jpg";
 
 const values = [
   { icon: Heart, title: "Patient First", desc: "Every decision we make starts with what's best for our patients." },
@@ -28,7 +28,7 @@ const About = () => {
             About Pulpcare Dental Clinic
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }} className="text-lg opacity-90 max-w-2xl mx-auto">
-            A modern dental practice built on trust, expertise, and genuine care for every patient in Surulere, Lagos.
+            A modern dental practice built on trust, expertise, and genuine care for every patient in Surulere, Lagos, Nigeria.
           </motion.p>
         </div>
       </section>
@@ -47,7 +47,7 @@ const About = () => {
                 We understand that visiting the dentist can be stressful. That's why we've built an environment where patients feel welcome, informed, and at ease. From the moment you walk in, our friendly team ensures you receive personalised attention and the highest standard of care.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Our clinic is equipped with modern dental technology, and our team regularly undergoes training to stay current with the latest techniques and best practices in dentistry. We are especially known for our expertise in veneers, orthodontics, and Invisalign treatments.
+                Our clinic is equipped with modern dental technology, and our team regularly undergoes training to stay current with the latest techniques and best practices in dentistry. We are especially known for our expertise in root canal treatments, crown and bridges, orthodontics, clear aligners, and other advanced dental treatments.
               </p>
             </ScrollReveal>
             <ScrollReveal direction="right">
@@ -78,7 +78,7 @@ const About = () => {
                 Known for our calm demeanour and thorough approach, we take the time to explain every procedure, answer your questions, and ensure you feel confident about your treatment plan. We believe that a well-informed patient is a happier patient.
               </p>
               <div className="space-y-3">
-                {["Certified dental professionals", "Member, Nigerian Dental Association", "Specialists in Veneers, Orthodontics & Invisalign", "Over 5,000 successful procedures", "We accept HMO patients"].map((item, i) => (
+                {["Certified dental professionals", "Member, Nigerian Dental Association", "Specialists in Root Canal, Endodontics, Veneers, Orthodontics & Clear Aligners", "Over 5,000 successful procedures", "We accept HMO patients"].map((item, i) => (
                   <ScrollReveal key={item} delay={i * 0.06}>
                     <div className="flex items-center gap-2.5">
                       <CheckCircle2 className="w-5 h-5 text-pulpcare-success shrink-0" />

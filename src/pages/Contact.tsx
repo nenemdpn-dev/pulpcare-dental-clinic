@@ -112,9 +112,9 @@ const Contact = () => {
                   <h3 className="font-semibold mb-4 flex items-center gap-2"><Clock className="w-5 h-5 text-primary" /> Working Hours</h3>
                   <div className="space-y-3">
                     {[
-                      { day: "Monday – Friday", time: "8:00 AM – 6:00 PM" },
-                      { day: "Saturday", time: "9:00 AM – 3:00 PM" },
-                      { day: "Sunday", time: "Closed" },
+                      { day: "Monday – Friday", time: "8:00 AM – 7:00 PM" },
+                      { day: "Saturday", time: "9:00 AM – 6:00 PM" },
+                      { day: "Sunday", time: "12:00 PM – 4:00 PM" },
                     ].map((h) => (
                       <div key={h.day} className="flex justify-between py-2 border-b border-border">
                         <span className="text-sm font-medium">{h.day}</span>
