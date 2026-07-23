@@ -153,6 +153,24 @@ const ServiceDetail = () => {
                 <p className="text-muted-foreground leading-relaxed mb-10">{service.whatToExpect}</p>
               </ScrollReveal>
 
+              {slug === "cosmetic-dentistry" && (
+                <ScrollReveal delay={0.25}>
+                  <h2 className="text-2xl font-bold mb-6">Our Cosmetic Work</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+                    {[
+                      { src: veneersResult, label: "Veneers" },
+                      { src: alignersVsBraces, label: "Clear aligners vs braces" },
+                      { src: bracesPatient, label: "Orthodontic braces" },
+                    ].map((g) => (
+                      <div key={g.label} className="aspect-[4/5] rounded-xl overflow-hidden shadow-md bg-muted">
+                        <img src={g.src} alt={`Pulpcare cosmetic dentistry — ${g.label}`} className="w-full h-full object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                </ScrollReveal>
+              )}
+
+
               <ScrollReveal delay={0.3}>
                 <div className="bg-pulpcare-light rounded-2xl p-8 text-center">
                   <h3 className="text-xl font-bold mb-3">Ready to Book?</h3>
