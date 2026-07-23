@@ -23,7 +23,7 @@ const serviceData: Record<string, { title: string; description: string; benefits
     description: "General dentistry is the foundation of a healthy smile. At Pulpcare Dental Clinic, our general dental services include comprehensive oral examinations, digital X-rays, dental fillings, gum disease treatment, and preventive care plans tailored to your individual needs. We believe in catching problems early, so regular check-ups are key to avoiding costly and painful procedures down the line. Our team will thoroughly assess your teeth, gums, and jaw, then create a personalised treatment plan to keep your mouth in top condition.",
     benefits: ["Comprehensive oral health assessments", "Early detection of cavities and gum disease", "Digital X-rays for precise diagnosis", "Custom preventive care plans", "Comfortable, modern treatment environment"],
     whatToExpect: "Your visit begins with a friendly welcome from our reception team. You'll have a thorough examination including digital X-rays if needed. The dentist will discuss findings with you clearly, answer all your questions, and recommend the best treatment options. Most general appointments take 30–60 minutes.",
-    image: "dentist",
+    image: "general-dentistry",
   },
   "dental-cleaning": {
     title: "Dental Cleaning",
@@ -31,7 +31,7 @@ const serviceData: Record<string, { title: string; description: string; benefits
     description: "Professional dental cleaning goes far beyond what your toothbrush can achieve. Our hygiene team uses ultrasonic scalers and specialised instruments to remove hardened plaque (tartar) from above and below the gum line, polish your teeth to remove surface stains, and apply fluoride protection. Regular professional cleanings every six months are essential for preventing gum disease, cavities, and bad breath.",
     benefits: ["Removes hardened plaque and tartar", "Prevents gum disease and tooth decay", "Freshens breath and removes stains", "Includes fluoride treatment for added protection", "Quick, comfortable procedure"],
     whatToExpect: "A cleaning session typically takes 45–60 minutes. Our hygienist will gently scale away tartar, polish your teeth with a professional paste, and floss between each tooth. You'll leave with a noticeably cleaner, fresher smile.",
-    image: "procedure",
+    image: "dental-cleaning",
   },
   "tooth-extraction": {
     title: "Tooth Extraction",
@@ -39,7 +39,7 @@ const serviceData: Record<string, { title: string; description: string; benefits
     description: "Sometimes a tooth needs to come out — whether due to severe decay, infection, crowding, or impaction. At Pulpcare, we perform tooth extractions with the utmost care and precision. Using modern anaesthesia techniques, we ensure the procedure is as painless as possible. Our post-extraction care includes detailed instructions and follow-up support to promote fast, comfortable healing.",
     benefits: ["Painless procedure with modern anaesthesia", "Experienced oral surgery techniques", "Comprehensive post-extraction care", "Prevention of infection spread", "Clear aftercare instructions provided"],
     whatToExpect: "After numbing the area completely, the dentist will carefully remove the tooth using specialised instruments. The entire process usually takes 20–40 minutes. You'll receive gauze and detailed aftercare instructions.",
-    image: "treatment",
+    image: "tooth-extraction",
   },
   "teeth-whitening": {
     title: "Teeth Whitening",
@@ -47,7 +47,7 @@ const serviceData: Record<string, { title: string; description: string; benefits
     description: "A brighter smile can transform your confidence. Our professional whitening treatments use clinically proven, enamel-safe whitening agents that deliver results far superior to over-the-counter products. Whether your teeth are stained from coffee, tea, or natural ageing, we can help you achieve a noticeably whiter smile in just one visit.",
     benefits: ["Noticeably whiter teeth in one session", "Safe, enamel-friendly whitening agents", "Long-lasting results with proper care", "Custom treatment for your shade goals", "Boosts confidence and appearance"],
     whatToExpect: "We'll start by assessing your current tooth shade and discussing your goals. A protective barrier is applied to your gums, then the whitening agent is carefully applied to your teeth. The session takes about 60–90 minutes, and you'll see immediate results.",
-    image: "smile",
+    image: "teeth-whitening",
   },
   "paediatric-dentistry": {
     title: "Paediatric Dentistry",
@@ -55,7 +55,7 @@ const serviceData: Record<string, { title: string; description: string; benefits
     description: "We love treating our youngest patients! Paediatric dentistry at Pulpcare is all about creating positive dental experiences that set children up for a lifetime of good oral health. Our team is specially trained to handle the unique dental needs of children, from their first tooth through adolescence.",
     benefits: ["Gentle, child-friendly approach", "Fun, welcoming environment for kids", "Preventive care including sealants and fluoride", "Early detection of alignment issues", "Education on brushing and oral hygiene habits"],
     whatToExpect: "We take extra time with our young patients. The visit includes a gentle examination, cleaning, and age-appropriate education about dental hygiene. Parents are welcome to stay during the entire visit.",
-    image: "dentist",
+    image: "paediatric-dentistry",
   },
   "root-canal": {
     title: "Root Canal Treatment",
@@ -63,15 +63,15 @@ const serviceData: Record<string, { title: string; description: string; benefits
     description: "A root canal treatment saves a tooth that's been badly damaged by decay or infection. Despite its reputation, modern root canal therapy is virtually painless and no more uncomfortable than getting a filling. At Pulpcare, we use advanced techniques and anaesthesia to ensure your comfort throughout the procedure.",
     benefits: ["Saves your natural tooth from extraction", "Eliminates pain from infection", "Virtually painless with modern anaesthesia", "Prevents spread of infection to other teeth", "Restores full tooth function with a crown"],
     whatToExpect: "After thorough numbing, the dentist accesses the tooth's inner chamber, removes the infected tissue, cleans and shapes the canals, then fills and seals them. The procedure typically requires 1–2 visits.",
-    image: "treatment",
+    image: "root-canal",
   },
   "cosmetic-dentistry": {
     title: "Cosmetic Dentistry",
     meta: "Cosmetic dentistry and smile makeovers in Lagos — veneers, bonding, and more at Pulpcare Dental Clinic.",
-    description: "Your smile is one of the first things people notice. Our cosmetic dentistry services are designed to enhance the appearance of your teeth and give you the smile you've always wanted. From dental veneers and bonding to complete smile makeovers, we combine artistry with dental science to deliver natural-looking, beautiful results. Pulpcare is especially known for our expertise in veneers, orthodontics, and Invisalign.",
-    benefits: ["Custom porcelain and composite veneers", "Dental bonding for chips and gaps", "Orthodontics & Invisalign treatment", "Natural-looking, durable results", "Personalised treatment plans"],
+    description: "Your smile is one of the first things people notice. Our cosmetic dentistry services are designed to enhance the appearance of your teeth and give you the smile you've always wanted. From dental veneers and bonding to complete smile makeovers, we combine artistry with dental science to deliver natural-looking, beautiful results. Pulpcare is especially known for our expertise in veneers, orthodontics, and clear aligners.",
+    benefits: ["Custom porcelain and composite veneers", "Dental bonding for chips and gaps", "Orthodontics & clear aligner treatment", "Natural-looking, durable results", "Personalised treatment plans"],
     whatToExpect: "We begin with a detailed consultation to understand your aesthetic goals. Digital imaging may be used to preview your new smile. Treatment timelines vary depending on the procedures chosen.",
-    image: "smile",
+    image: "cosmetic-dentistry",
   },
   "emergency-dental-care": {
     title: "Emergency Dental Care",
@@ -79,15 +79,19 @@ const serviceData: Record<string, { title: string; description: string; benefits
     description: "Dental emergencies don't wait, and neither should you. Whether you've knocked out a tooth, have severe toothache, a broken filling, or a dental abscess, our team is ready to provide urgent care when you need it most. We prioritise emergency cases and strive to see you as quickly as possible — walk-ins are welcome during clinic hours.",
     benefits: ["Same-day emergency appointments available", "Walk-ins welcome during clinic hours", "Rapid pain relief and treatment", "Experienced handling of dental trauma", "Follow-up care to ensure full recovery"],
     whatToExpect: "Contact us immediately by phone at 0813 999 4755 or via WhatsApp. We'll advise you on immediate first-aid steps and schedule you for the earliest available slot.",
-    image: "treatment",
+    image: "emergency-dental-care",
   },
 };
 
 const imageMap: Record<string, string> = {
-  dentist: dentistPatient,
-  procedure: dentalProcedure,
-  treatment: clinicTreatment,
-  smile: patientSmile,
+  "general-dentistry": drChrisProcedure,
+  "dental-cleaning": dentalCleaning,
+  "tooth-extraction": toothExtraction,
+  "teeth-whitening": whiteningPatient,
+  "paediatric-dentistry": paediatricCare,
+  "root-canal": rootCanal,
+  "cosmetic-dentistry": veneersResult,
+  "emergency-dental-care": emergencyPain,
 };
 
 const ServiceDetail = () => {
