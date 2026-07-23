@@ -5,10 +5,16 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import ScrollReveal from "@/components/ScrollReveal";
 import MicroButton from "@/components/MicroButton";
-import clinicTreatment from "@/assets/clinic-treatment.jpg";
-import dentalProcedure from "@/assets/dental-procedure.jpg";
-import patientSmile from "@/assets/patient-smile.jpg";
-import dentistPatient from "@/assets/dentist-patient.jpg";
+import drChrisProcedure from "@/assets/dr-chris-procedure.jpg";
+import dentalCleaning from "@/assets/dental-cleaning.jpg";
+import toothExtraction from "@/assets/tooth-extraction.jpg";
+import whiteningPatient from "@/assets/whitening-patient.jpg";
+import paediatricCare from "@/assets/paediatric-care.jpg";
+import rootCanal from "@/assets/root-canal.jpg";
+import veneersResult from "@/assets/veneers-result.jpg";
+import emergencyPain from "@/assets/emergency-pain.jpg";
+import alignersVsBraces from "@/assets/aligners-vs-braces.jpg";
+import bracesPatient from "@/assets/braces-patient.jpg";
 
 const serviceData: Record<string, { title: string; description: string; benefits: string[]; whatToExpect: string; meta: string; image: string }> = {
   "general-dentistry": {
