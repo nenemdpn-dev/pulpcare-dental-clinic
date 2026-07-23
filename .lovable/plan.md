@@ -1,72 +1,97 @@
 
-# Pulpcare Dental Clinic — Interactive Design Prototype
+# Pulpcare — Image, Copy & Favicon Correction Pass
 
-## What We're Building
-A fully interactive, pixel-perfect React prototype of the redesigned Pulpcare Dental Clinic website. This will serve as a **design reference for the WordPress developer** — every page, component, interaction, and piece of content will be built out so the WP developer can replicate it exactly.
+Goal: fix every wrong or off-brand image the client flagged, apply the copy corrections captured from his voice note and Telegram messages, and replace the Lovable favicon with the Pulpcare mark — leaving the site export-ready for cPanel.
 
 ---
 
-## Design System
-- **Color Palette**: Medical blue primary (#0077B6), teal accent (#00B4D8), warm white backgrounds, dark navy text
-- **Typography**: Clean sans-serif type scale (Inter or similar) — distinct H1/H2/H3/body sizes with strong hierarchy
-- **Buttons**: Rounded corners, consistent sizing, clear hover/active states
-- **Spacing**: Consistent 8px grid system with balanced white space
+## 1. Image swaps
 
-## Pages & Content (all with real, SEO-ready copy — no placeholders)
+Approach: for the photos the client shot at the clinic, use them as-is. For the shots he sent as Google/Telegram screenshots, crop out the phone status bar, browser chrome and Google Lens icon in a Python/PIL pass so we ship a clean image — no AI generation, no extra credits.
 
-### 1. Home Page
-- **Sticky header** with centered nav, logo, and prominent "Book Appointment" CTA
-- **Hero section**: Full-width with clinic interior photo, high-contrast headline ("Your Trusted Dental Care in Lagos"), subheadline, and primary CTA
-- **Welcome / About preview** section with clinic photo
-- **Services grid** (6-8 services with icons)
-- **Why Choose Us** section with trust-building points
-- **Appointment CTA banner**
-- **Working hours & location**
-- **Testimonials section**
-- **Full footer**: Quick links, services links, contact details, WhatsApp CTA, social icons, copyright
+New assets will be written into `src/assets/` (and their old files removed), then referenced from the pages below.
 
-### 2. About Us
-- Clinic story and mission
-- Dr. Chris profile section
-- Clinic values and approach
-- Team/facility photos area
+**Real Pulpcare / African patient photos (use as-is):**
 
-### 3. Our Services (listing page)
-- Grid of all 8 services with icons, short descriptions, and links to individual pages
+| New asset | Source upload | Used on |
+| --- | --- | --- |
+| `dr-chris-scan.jpg` | photo_2026-07-23_18-35-48 (Dr. Chris intraoral scan) | About → "Meet the Team" (replaces `dentist-patient.jpg`) |
+| `dr-chris-procedure.jpg` | photo_2026-07-23_18-35-58 (Dr. Chris in blue scrubs) | General Dentistry service page + Home "Meet Dr. Chris" area |
+| `dr-chris-office.jpg` | photo_2026-07-23_18-36-11 (Dr. Chris at chair with X-ray) | About hero background (replaces `clinic-reception.jpg`) + Home hero |
+| `whitening-patient.jpg` | photo_2026-07-23_18-36-04 (in-clinic laser whitening) | Teeth Whitening service page |
+| `veneers-result.jpg` | photo_2026-07-23_18-35-54 (real veneers close-up) | Cosmetic Dentistry service page (primary), Home "smile" slot |
+| `braces-patient.jpg` | photo_2026-07-23_18-36-40 (pink braces close-up) | Cosmetic Dentistry (orthodontics/aligners block) |
+| `emergency-pain.jpg` | photo_2026-07-23_18-35-37 (Black man holding jaw) | Emergency Dental Care service page |
 
-### 4. Individual Service Pages (8 pages)
-- General Dentistry, Dental Cleaning, Tooth Extraction, Teeth Whitening, Paediatric Dentistry, Root Canal Treatment, Cosmetic Dentistry, Emergency Dental Care
-- Each with: description, benefits, what to expect, CTA to book
+**Screenshot references — cropped to clean images (no generation):**
 
-### 5. Book Appointment
-- Modern booking form: date/time picker, patient name, phone, email, service selection dropdown, message field
-- Clean, Calendly-inspired design
+| New asset | Source upload | Used on |
+| --- | --- | --- |
+| `paediatric-care.jpg` | photo_2026-07-23_18-35-40 (crop to the top child-dentist tile) | Paediatric Dentistry service page |
+| `aligners-vs-braces.jpg` | photo_2026-07-23_18-35-52 (crop off Google Lens badge) | Cosmetic Dentistry — "clear aligners vs braces" block |
+| `clear-aligners.jpg` | photo_2026-07-23_18-36-21 (crop off iOS status bar + Lens icon) | Cosmetic Dentistry sidebar / clear-aligner mention |
+| `tooth-extraction.jpg` | photo_2026-07-23_18-36-18 (crop to main extraction photo only) | Tooth Extraction service page |
+| `dental-cleaning.jpg` | photo_2026-07-23_18-36-29 (crop off Lens icon) | Dental Cleaning service page |
+| `root-canal.jpg` | photo_2026-07-23_18-36-32 (crop to circular illustration) | Root Canal Treatment service page |
 
-### 6. Blog (structure only)
-- Blog listing page with card layout
-- Single post template with sample content
+**Old assets removed after references are gone:** `dentist-patient.jpg`, `patient-smile.jpg`, `dental-procedure.jpg` (and any others that end up with zero imports after the swap). `clinic-reception.jpg`, `clinic-waiting-room.jpg`, `clinic-treatment.jpg`, `hero-dental.jpg`, `dental-pattern.jpg` stay — they're neutral interior/atmosphere shots, not faces.
 
-### 7. Contact
-- Contact form, clinic address, phone, email, map placeholder
-- WhatsApp click-to-chat button
-- Working hours
+**ServiceDetail wiring change:** the current 4-key `imageMap` (`dentist / procedure / treatment / smile`) is too coarse for the client's per-service corrections. Replace it with a per-service image, so each slug gets the exact photo he requested:
 
-## Key Components
-- **Sticky header** with mobile hamburger menu
-- **WhatsApp floating chat button** with custom welcome message
-- **Appointment booking form** (interactive, with validation)
-- **Responsive layout** — mobile-first, works on all screen sizes
-- **Footer** with full navigation, contact info, social links
+```text
+general-dentistry     → dr-chris-procedure.jpg
+dental-cleaning       → dental-cleaning.jpg
+tooth-extraction      → tooth-extraction.jpg
+teeth-whitening       → whitening-patient.jpg
+paediatric-dentistry  → paediatric-care.jpg
+root-canal            → root-canal.jpg
+cosmetic-dentistry    → veneers-result.jpg   (+ aligners-vs-braces.jpg / braces-patient.jpg in the body)
+emergency-dental-care → emergency-pain.jpg
+```
 
-## Content Approach
-- All copy will be professionally written, patient-focused, culturally appropriate for Nigerian audience
-- Friendly, reassuring, medically appropriate tone
-- SEO structure: proper heading hierarchy, descriptive text
+Cosmetic Dentistry page also gets a small in-body gallery (2–3 images side by side) as the client asked in Telegram — veneers + aligners-vs-braces + braces.
 
-## What This Prototype Provides for the WP Developer
-- Exact visual design for every page and component
-- Typography scale and spacing reference
-- Color system
-- Interactive states (hover, active, mobile menu)
-- Responsive breakpoints
-- Complete content/copy ready to paste into WordPress
+---
+
+## 2. Copy & content corrections (from voice note + screenshots)
+
+- **About page — expertise sentence:** replace "expertise in veneers, orthodontics, and Invisalign treatments" with "expertise in root canal treatments, crown and bridges, orthodontics, clear aligners, and other advanced dental treatments."
+- **About page — team highlights list:** change "Specialists in Veneers, Orthodontics & Invisalign" → "Specialists in Root Canal, Endodontics, Veneers, Orthodontics & Clear Aligners".
+- **Site-wide branding fix:** every remaining "Invisalign" → "clear aligner" / "clear aligners" (Services list, ServiceDetail cosmetic-dentistry copy, Header service menu, Index page).
+- **Hero location:** "Lagos" → "Lagos, Nigeria" on Home hero H1 and About hero subhead.
+- **Working hours (Contact page):** update to
+  - Monday – Friday: 8:00 AM – 7:00 PM
+  - Saturday: 9:00 AM – 6:00 PM
+  - Sunday: 12:00 PM – 4:00 PM
+- **WhatsApp link check:** confirm the floating WhatsApp button and Contact page link both point to `https://wa.me/2348139994755` (they already do — will re-verify in build).
+
+No layout/component structure changes beyond the cosmetic-dentistry mini-gallery.
+
+---
+
+## 3. Favicon
+
+Replace the Lovable favicon with the Pulpcare mark using the existing `src/assets/pulpcare-logo.png` (the fresh `pulpcare-dental-logo.png` upload came through as an empty file, so we reuse the logo already in the repo — same brand mark).
+
+Steps:
+1. `cp src/assets/pulpcare-logo.png public/favicon.png`
+2. `rm public/favicon.ico`
+3. Update `index.html` — replace `<link rel="icon" href="/favicon.ico" type="image/x-icon" />` with `<link rel="icon" href="/favicon.png" type="image/png" />`.
+
+While in `index.html`, also set a real `<title>` and matching OG/Twitter titles: **"Pulpcare Dental Clinic — Trusted Dental Care in Surulere, Lagos"** (description stays as-is).
+
+---
+
+## Technical notes
+
+- Cropping is done once via a short Python + PIL script in `/tmp/` that reads each screenshot, crops the pixel ranges listed above, and writes the JPG straight into `src/assets/`. No new npm deps.
+- After swaps, run `bun run build` to confirm no dead imports remain, then delete any now-orphaned images from `src/assets/`.
+- No routing, data model, or component API changes — this is a content/asset pass only, safe to export as a static build for cPanel.
+
+---
+
+## Out of scope
+
+- No AI image generation (per your credit constraint).
+- No new pages, no design/theme changes, no backend work.
+- The empty `pulpcare-dental-logo.png` upload is ignored — say the word if you want to re-upload a cleaner logo file and I'll swap the favicon to that version in a follow-up.
