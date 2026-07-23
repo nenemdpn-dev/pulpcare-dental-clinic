@@ -76,7 +76,7 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 !text-primary-foreground"
             >
-              Your Trusted Dental Care in Lagos
+              Your Trusted Dental Care in Lagos, Nigeria
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
