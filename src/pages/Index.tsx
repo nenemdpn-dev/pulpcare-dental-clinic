@@ -11,9 +11,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
 import ScrollReveal from "@/components/ScrollReveal";
 import MicroButton from "@/components/MicroButton";
-import clinicReception from "@/assets/clinic-reception.jpg";
+import clinicReception from "@/assets/dr-chris-office.jpg";
 import clinicWaiting from "@/assets/clinic-waiting-room.jpg";
-import patientSmile from "@/assets/patient-smile.jpg";
+import patientSmile from "@/assets/veneers-result.jpg";
 import clinicTreatment from "@/assets/clinic-treatment.jpg";
 
 const services = [
