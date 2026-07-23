@@ -338,9 +338,9 @@ const Index = () => {
               <h2 className="text-3xl font-bold mb-6">Working Hours & Location</h2>
               <div className="space-y-4 mb-8">
                 {[
-                  { day: "Monday – Friday", time: "8:00 AM – 6:00 PM" },
-                  { day: "Saturday", time: "9:00 AM – 3:00 PM" },
-                  { day: "Sunday", time: "Closed" },
+                  { day: "Monday – Friday", time: "8:00 AM – 7:00 PM" },
+                  { day: "Saturday", time: "9:00 AM – 6:00 PM" },
+                  { day: "Sunday", time: "12:00 PM – 4:00 PM" },
                 ].map((h) => (
                   <div key={h.day} className="flex justify-between items-center py-3 border-b border-border">
                     <span className="font-medium">{h.day}</span>
