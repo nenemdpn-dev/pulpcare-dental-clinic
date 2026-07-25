@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, ArrowLeft, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import ScrollReveal from "@/components/ScrollReveal";
 import MicroButton from "@/components/MicroButton";
 import drChrisProcedure from "@/assets/dr-chris-procedure.jpg";
@@ -111,6 +112,23 @@ const ServiceDetail = () => {
 
   return (
     <Layout>
+      <Seo
+        title={`${service.title} | Pulpcare Dental Clinic`}
+        description={service.meta}
+        path={`/services/${slug}`}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: service.title,
+          description: service.meta,
+          provider: {
+            "@type": "Dentist",
+            name: "Pulpcare Dental Clinic",
+            url: "https://pulpcaredentalclinic.lovable.app/",
+          },
+          areaServed: "Lagos, Nigeria",
+        }}
+      />
       <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground overflow-hidden">
         <div className="absolute inset-0 opacity-15">
           <img src={imageMap[service.image]} alt="" className="w-full h-full object-cover" />

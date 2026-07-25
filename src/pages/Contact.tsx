@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import ScrollReveal from "@/components/ScrollReveal";
 import MicroButton from "@/components/MicroButton";
 import whatsappIcon from "@/assets/whatsapp-icon.png";
@@ -24,6 +25,11 @@ const Contact = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Contact Us | Pulpcare Dental Clinic Lagos"
+        description="Contact Pulpcare Dental Clinic in Surulere, Lagos — call, WhatsApp or visit us at 1 Aderibigbe Street, Kilo. Open 7 days a week."
+        path="/contact"
+      />
       <section ref={heroRef} className="relative py-24 md:py-32 bg-foreground text-primary-foreground overflow-hidden">
         <motion.div className="absolute inset-0 opacity-20" style={{ y: heroY }}>
           <div className="w-full h-full bg-gradient-to-br from-primary/30 to-secondary/20" />

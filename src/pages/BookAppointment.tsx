@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 
 const services = [
   "General Dentistry",
@@ -63,6 +64,11 @@ const BookAppointment = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Book a Dental Appointment | Pulpcare Lagos"
+        description="Book your dental appointment online at Pulpcare Dental Clinic in Surulere, Lagos. Choose your service, date and time in minutes."
+        path="/book-appointment"
+      />
       <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground">
         <div className="container-narrow mx-auto px-4 md:px-8 text-center">
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl font-bold mb-4 !text-primary-foreground">

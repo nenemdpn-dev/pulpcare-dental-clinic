@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, CalendarDays, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 
 const blogPosts: Record<string, { title: string; date: string; category: string; content: string[] }> = {
   "importance-of-regular-dental-checkups": {
@@ -62,6 +63,21 @@ const BlogPost = () => {
 
   return (
     <Layout>
+      <Seo
+        title={`${post.title} | Pulpcare Dental Blog`}
+        description={post.title}
+        path={`/blog/${slug}`}
+        type="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          datePublished: post.date,
+          author: { "@type": "Person", name: "Dr. Chris" },
+          publisher: { "@type": "Organization", name: "Pulpcare Dental Clinic" },
+          mainEntityOfPage: `https://pulpcaredentalclinic.lovable.app/blog/${slug}`,
+        }}
+      />
       <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground">
         <div className="container-narrow mx-auto px-4 md:px-8">
           <Link to="/blog" className="inline-flex items-center gap-2 text-sm opacity-70 hover:opacity-100 mb-6 transition-opacity">
