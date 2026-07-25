@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import ScrollReveal from "@/components/ScrollReveal";
 import MicroButton from "@/components/MicroButton";
 import clinicReception from "@/assets/dr-chris-office.jpg";
@@ -49,6 +50,17 @@ const Index = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Pulpcare Dental Clinic — Surulere, Lagos"
+        description="Trusted dental care in Surulere, Lagos. General, cosmetic and emergency dentistry — veneers, orthodontics, clear aligners, root canal and family dental care."
+        path="/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Pulpcare Dental Clinic",
+          url: "https://pulpcaredentalclinic.lovable.app/",
+        }}
+      />
       {/* Hero Section — Parallax */}
       <section ref={heroRef} className="relative min-h-[92vh] flex items-center overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>

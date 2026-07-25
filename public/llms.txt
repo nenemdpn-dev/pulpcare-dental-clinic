@@ -1,0 +1,23 @@
+# Pulpcare Dental Clinic
+
+> Trusted general, cosmetic and emergency dental care in Surulere, Lagos, Nigeria. Led by Dr. Chris and a certified team offering veneers, orthodontics, clear aligners, root canal treatment, and family dentistry.
+
+## Pages
+
+- [Home](/): Overview of Pulpcare Dental Clinic services, location and booking.
+- [About](/about): Our story, team, values and clinical approach.
+- [Services](/services): Full list of dental services offered.
+- [Book Appointment](/book-appointment): Book a visit online.
+- [Blog](/blog): Dental health tips and articles.
+- [Contact](/contact): Address, phone, WhatsApp and clinic hours.
+
+## Services
+
+- [General Dentistry](/services/general-dentistry): Check-ups, fillings, X-rays and preventive care.
+- [Dental Cleaning](/services/dental-cleaning): Professional scaling and polishing.
+- [Tooth Extraction](/services/tooth-extraction): Painless tooth removal with modern anaesthesia.
+- [Teeth Whitening](/services/teeth-whitening): In-office professional whitening.
+- [Paediatric Dentistry](/services/paediatric-dentistry): Gentle care for children.
+- [Root Canal Treatment](/services/root-canal): Pain-free endodontic therapy.
+- [Cosmetic Dentistry](/services/cosmetic-dentistry): Veneers, bonding, orthodontics and clear aligners.
+- [Emergency Dental Care](/services/emergency-dental-care): Same-day urgent dental attention.

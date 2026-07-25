@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CheckCircle2, Award, Heart, Users, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import ScrollReveal from "@/components/ScrollReveal";
 import MicroButton from "@/components/MicroButton";
 import clinicWaiting from "@/assets/clinic-waiting-room.jpg";
@@ -18,6 +19,11 @@ const values = [
 const About = () => {
   return (
     <Layout>
+      <Seo
+        title="About Us | Pulpcare Dental Clinic"
+        description="Meet the Pulpcare Dental Clinic team in Surulere, Lagos — Dr. Chris and certified dental experts delivering compassionate, modern dental care."
+        path="/about"
+      />
       {/* Hero */}
       <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground overflow-hidden">
         <div className="absolute inset-0 opacity-20">
