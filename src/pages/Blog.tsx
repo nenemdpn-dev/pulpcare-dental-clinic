@@ -66,10 +66,10 @@ const Blog = () => {
                           <CalendarDays className="w-3 h-3" /> {post.date}
                         </span>
                       </div>
-                      <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors leading-snug">{post.title}</h3>
+                      <h2 className="font-semibold mb-2 group-hover:text-primary transition-colors leading-snug">{post.title}</h2>
                       <p className="text-sm text-muted-foreground leading-relaxed mb-3">{post.excerpt}</p>
                       <span className="text-primary text-sm font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Read More <ArrowRight className="w-4 h-4" />
+                        Read the full article <ArrowRight className="w-4 h-4" />
                       </span>
                     </CardContent>
                   </Card>

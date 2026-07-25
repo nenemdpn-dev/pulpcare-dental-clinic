@@ -138,7 +138,7 @@ const Header = () => {
         <div className="lg:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon"><Menu className="w-6 h-6" /></Button>
+              <Button variant="ghost" size="icon" aria-label="Open menu"><Menu className="w-6 h-6" /></Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-80 bg-card overflow-y-auto">
               <div className="flex flex-col gap-4 mt-8">

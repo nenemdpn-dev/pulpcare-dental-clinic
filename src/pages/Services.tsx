@@ -47,10 +47,10 @@ const Services = () => {
                         >
                           <s.icon className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors" />
                         </motion.div>
-                        <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors">{s.title}</h3>
+                        <h2 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors">{s.title}</h2>
                         <p className="text-sm text-muted-foreground leading-relaxed mb-4">{s.desc}</p>
                         <span className="text-primary text-sm font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                          Learn More <ArrowRight className="w-4 h-4" />
+                          Learn about {s.title} <ArrowRight className="w-4 h-4" />
                         </span>
                       </CardContent>
                     </Card>
