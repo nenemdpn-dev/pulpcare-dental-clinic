@@ -4,6 +4,7 @@ import { Stethoscope, Sparkles, Syringe, Smile, Baby, Heart, Award, Zap, ArrowRi
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import ScrollReveal from "@/components/ScrollReveal";
 import MicroButton from "@/components/MicroButton";
 
@@ -21,6 +22,11 @@ const services = [
 const Services = () => {
   return (
     <Layout>
+      <Seo
+        title="Dental Services in Lagos | Pulpcare Dental Clinic"
+        description="Explore Pulpcare Dental Clinic's services in Surulere, Lagos — general, cosmetic, paediatric, root canal, orthodontics, clear aligners and emergency dentistry."
+        path="/services"
+      />
       <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground">
         <div className="container-narrow mx-auto px-4 md:px-8 text-center">
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl font-bold mb-4 !text-primary-foreground">

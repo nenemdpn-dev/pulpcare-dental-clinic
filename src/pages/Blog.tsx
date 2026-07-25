@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { CalendarDays, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import dentalPattern from "@/assets/dental-pattern.jpg";
 
 const fadeInUp = {
@@ -38,6 +39,11 @@ const posts = [
 const Blog = () => {
   return (
     <Layout>
+      <Seo
+        title="Dental Health Blog | Pulpcare Dental Clinic"
+        description="Dental health tips, guides and news from the Pulpcare Dental Clinic team in Lagos — preventive care, paediatric dentistry, emergencies and more."
+        path="/blog"
+      />
       <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground">
         <div className="container-narrow mx-auto px-4 md:px-8 text-center">
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl font-bold mb-4 !text-primary-foreground">
