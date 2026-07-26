@@ -23,6 +23,8 @@ const blogPosts: Record<string, { title: string; date: string; isoDate: string; 
   "tips-for-childrens-dental-health": {
     title: "5 Tips to Keep Your Child's Teeth Healthy and Strong",
     date: "December 8, 2025",
+    isoDate: "2025-12-08",
+    image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
     category: "Paediatric Dentistry",
     content: [
       "As parents, we want the best for our children — and that includes their dental health. Starting good oral hygiene habits early sets the foundation for a lifetime of healthy smiles. Here are five practical tips every Nigerian parent should know.",
