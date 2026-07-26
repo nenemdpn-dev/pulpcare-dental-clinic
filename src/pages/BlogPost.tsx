@@ -78,10 +78,23 @@ const BlogPost = () => {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: post.title,
-          datePublished: post.date,
-          author: { "@type": "Person", name: "Dr. Chris" },
-          publisher: { "@type": "Organization", name: "Pulpcare Dental Clinic" },
-          mainEntityOfPage: `https://pulpcaredentalclinic.lovable.app/blog/${slug}`,
+          description: post.content[0].slice(0, 200),
+          image: [post.image],
+          datePublished: post.isoDate,
+          dateModified: post.isoDate,
+          author: { "@type": "Person", name: "Dr. Chris", url: "https://pulpcaredentalclinic.lovable.app/about" },
+          publisher: {
+            "@type": "Organization",
+            name: "Pulpcare Dental Clinic",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://pulpcaredentalclinic.lovable.app/favicon.png",
+            },
+          },
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `https://pulpcaredentalclinic.lovable.app/blog/${slug}`,
+          },
         }}
       />
       <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground">
