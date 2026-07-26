@@ -259,6 +259,22 @@ const ServiceDetail = () => {
               )}
 
 
+              <ScrollReveal delay={0.28}>
+                <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+                <div className="space-y-4 mb-10">
+                  {[...(serviceFaqs[slug!] ?? []), ...commonFaqs].map((f) => (
+                    <details key={f.q} className="group rounded-xl border border-border bg-background p-5">
+                      <summary className="cursor-pointer font-semibold list-none flex items-start justify-between gap-4">
+                        <span>{f.q}</span>
+                        <span className="text-primary transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+                      </summary>
+                      <p className="text-muted-foreground mt-3 leading-relaxed">{f.a}</p>
+                    </details>
+                  ))}
+                </div>
+              </ScrollReveal>
+
+
               <ScrollReveal delay={0.3}>
                 <div className="bg-pulpcare-light rounded-2xl p-8 text-center">
                   <h3 className="text-xl font-bold mb-3">Ready to Book?</h3>
