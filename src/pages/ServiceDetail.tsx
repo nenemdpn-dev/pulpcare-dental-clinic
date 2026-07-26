@@ -120,13 +120,25 @@ const ServiceDetail = () => {
           "@context": "https://schema.org",
           "@type": "Service",
           name: service.title,
+          serviceType: service.title,
           description: service.meta,
           provider: {
             "@type": "Dentist",
             name: "Pulpcare Dental Clinic",
             url: "https://pulpcaredentalclinic.lovable.app/",
+            telephone: "+234-813-999-4755",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "1 Aderibigbe Street, by Ogosco Bus Stop, Kilo",
+              addressLocality: "Surulere",
+              addressRegion: "Lagos",
+              addressCountry: "NG",
+            },
           },
-          areaServed: "Lagos, Nigeria",
+          areaServed: {
+            "@type": "City",
+            name: "Lagos",
+          },
         }}
       />
       <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground overflow-hidden">
