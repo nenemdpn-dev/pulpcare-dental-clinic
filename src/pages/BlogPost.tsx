@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import Seo from "@/components/Seo";
 
-const blogPosts: Record<string, { title: string; date: string; category: string; content: string[] }> = {
+const blogPosts: Record<string, { title: string; date: string; isoDate: string; category: string; content: string[]; image: string }> = {
   "importance-of-regular-dental-checkups": {
     title: "Why Regular Dental Check-Ups Are Important for Your Health",
     date: "January 15, 2026",
+    isoDate: "2026-01-15",
+    image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
     category: "Preventive Care",
     content: [
       "Many Nigerians only visit the dentist when something hurts — a toothache, a broken filling, or swollen gums. While we're always happy to help in those situations, the truth is that regular dental check-ups can prevent most of these problems from occurring in the first place.",
