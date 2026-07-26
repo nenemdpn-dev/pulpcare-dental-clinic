@@ -38,6 +38,8 @@ const blogPosts: Record<string, { title: string; date: string; isoDate: string; 
   "what-to-do-in-dental-emergency": {
     title: "What to Do in a Dental Emergency: A Quick Guide",
     date: "November 22, 2025",
+    isoDate: "2025-11-22",
+    image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
     category: "Emergency Care",
     content: [
       "Dental emergencies can happen anytime — during a football match, while eating, or even in the middle of the night. Knowing what to do in those critical first minutes can mean the difference between saving and losing a tooth.",
