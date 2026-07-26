@@ -74,28 +74,39 @@ const BlogPost = () => {
         description={post.title}
         path={`/blog/${slug}`}
         type="article"
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: post.title,
-          description: post.content[0].slice(0, 200),
-          image: [post.image],
-          datePublished: post.isoDate,
-          dateModified: post.isoDate,
-          author: { "@type": "Person", name: "Dr. Chris", url: "https://pulpcaredentalclinic.lovable.app/about" },
-          publisher: {
-            "@type": "Organization",
-            name: "Pulpcare Dental Clinic",
-            logo: {
-              "@type": "ImageObject",
-              url: "https://pulpcaredentalclinic.lovable.app/favicon.png",
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: post.title,
+            description: post.content[0].slice(0, 200),
+            image: [post.image],
+            datePublished: post.isoDate,
+            dateModified: post.isoDate,
+            author: { "@type": "Person", name: "Dr. Chris", url: "https://pulpcaredentalclinic.lovable.app/about" },
+            publisher: {
+              "@type": "Organization",
+              name: "Pulpcare Dental Clinic",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://pulpcaredentalclinic.lovable.app/favicon.png",
+              },
+            },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `https://pulpcaredentalclinic.lovable.app/blog/${slug}`,
             },
           },
-          mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": `https://pulpcaredentalclinic.lovable.app/blog/${slug}`,
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://pulpcaredentalclinic.lovable.app/" },
+              { "@type": "ListItem", position: 2, name: "Blog", item: "https://pulpcaredentalclinic.lovable.app/blog" },
+              { "@type": "ListItem", position: 3, name: post.title, item: `https://pulpcaredentalclinic.lovable.app/blog/${slug}` },
+            ],
           },
-        }}
+        ]}
       />
       <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground">
         <div className="container-narrow mx-auto px-4 md:px-8">
