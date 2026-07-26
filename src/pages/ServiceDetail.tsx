@@ -157,30 +157,47 @@ const ServiceDetail = () => {
         title={`${service.title} | Pulpcare Dental Clinic`}
         description={service.meta}
         path={`/services/${slug}`}
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "Service",
-          name: service.title,
-          serviceType: service.title,
-          description: service.meta,
-          provider: {
-            "@type": "Dentist",
-            name: "Pulpcare Dental Clinic",
-            url: "https://pulpcaredentalclinic.lovable.app/",
-            telephone: "+234-813-999-4755",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "1 Aderibigbe Street, by Ogosco Bus Stop, Kilo",
-              addressLocality: "Surulere",
-              addressRegion: "Lagos",
-              addressCountry: "NG",
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: service.title,
+            serviceType: service.title,
+            description: service.meta,
+            provider: {
+              "@type": "Dentist",
+              name: "Pulpcare Dental Clinic",
+              url: "https://pulpcaredentalclinic.lovable.app/",
+              telephone: "+234-813-999-4755",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "1 Aderibigbe Street, by Ogosco Bus Stop, Kilo",
+                addressLocality: "Surulere",
+                addressRegion: "Lagos",
+                addressCountry: "NG",
+              },
             },
+            areaServed: { "@type": "City", name: "Lagos" },
           },
-          areaServed: {
-            "@type": "City",
-            name: "Lagos",
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://pulpcaredentalclinic.lovable.app/" },
+              { "@type": "ListItem", position: 2, name: "Services", item: "https://pulpcaredentalclinic.lovable.app/services" },
+              { "@type": "ListItem", position: 3, name: service.title, item: `https://pulpcaredentalclinic.lovable.app/services/${slug}` },
+            ],
           },
-        }}
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [...(serviceFaqs[slug!] ?? []), ...commonFaqs].map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          },
+        ]}
       />
       <section className="relative py-24 md:py-32 bg-foreground text-primary-foreground overflow-hidden">
         <div className="absolute inset-0 opacity-15">
