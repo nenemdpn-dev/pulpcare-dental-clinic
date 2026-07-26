@@ -17,6 +17,47 @@ import emergencyPain from "@/assets/emergency-pain.jpg";
 import alignersVsBraces from "@/assets/aligners-vs-braces.jpg";
 import bracesPatient from "@/assets/braces-patient.jpg";
 
+const commonFaqs: { q: string; a: string }[] = [
+  { q: "How do I book an appointment at Pulpcare?", a: "You can book online via our Book Appointment page, call 0813 999 4755, or message us on WhatsApp. Same-day slots are often available." },
+  { q: "Where is Pulpcare Dental Clinic located?", a: "We are at 1 Aderibigbe Street, by Ogosco Bus Stop, Kilo, Surulere, Lagos, Nigeria." },
+  { q: "Do you accept walk-in patients?", a: "Yes. Walk-ins are welcome during clinic hours, though booking ahead guarantees a shorter wait." },
+];
+
+const serviceFaqs: Record<string, { q: string; a: string }[]> = {
+  "general-dentistry": [
+    { q: "How often should I have a general dental check-up?", a: "Most patients benefit from a check-up and professional cleaning every six months so problems are caught early." },
+    { q: "What does a general dentistry visit include?", a: "A full oral exam, digital X-rays when needed, screening for cavities and gum disease, and a personalised care plan." },
+  ],
+  "dental-cleaning": [
+    { q: "Is a professional dental cleaning painful?", a: "No. Most patients feel only mild vibration or cool water. We can numb sensitive areas on request." },
+    { q: "How long does a cleaning appointment take?", a: "Typically 45–60 minutes, including scaling, polishing, flossing, and fluoride application." },
+  ],
+  "tooth-extraction": [
+    { q: "Will a tooth extraction hurt?", a: "The area is fully numbed with modern anaesthesia, so the procedure itself is painless. Mild soreness afterwards is normal and settles within a few days." },
+    { q: "How long does healing take after an extraction?", a: "Initial healing takes 7–10 days. Follow the aftercare instructions we provide for the smoothest recovery." },
+  ],
+  "teeth-whitening": [
+    { q: "Is professional teeth whitening safe for my enamel?", a: "Yes. We use clinically proven, enamel-safe agents applied under professional supervision." },
+    { q: "How long do whitening results last?", a: "Results typically last 12–24 months, depending on diet, smoking, and oral hygiene habits." },
+  ],
+  "paediatric-dentistry": [
+    { q: "At what age should my child first see a dentist?", a: "By the first birthday or within six months of their first tooth appearing." },
+    { q: "How do you help nervous children feel comfortable?", a: "Our team uses gentle, age-appropriate explanations, a welcoming environment, and lets parents stay throughout the visit." },
+  ],
+  "root-canal": [
+    { q: "Is a root canal painful?", a: "Modern root canal treatment is virtually painless — most patients say it feels no different from a normal filling." },
+    { q: "How many visits does a root canal take?", a: "Most root canals are completed in 1–2 visits, followed by a crown to protect the tooth." },
+  ],
+  "cosmetic-dentistry": [
+    { q: "Do you offer veneers, orthodontics, and clear aligners?", a: "Yes. Pulpcare specialises in porcelain and composite veneers, orthodontic braces, and clear aligner treatment." },
+    { q: "How long does a smile makeover take?", a: "It depends on the treatments chosen — veneers can take 2–3 weeks, while orthodontics or clear aligners run several months." },
+  ],
+  "emergency-dental-care": [
+    { q: "Do you offer same-day emergency appointments?", a: "Yes. Call 0813 999 4755 or WhatsApp us and we will prioritise your case, often seeing you the same day." },
+    { q: "What should I do if a tooth is knocked out?", a: "Hold it by the crown, rinse gently, and either replace it in the socket or store it in milk. Get to us within 30 minutes for the best chance of saving it." },
+  ],
+};
+
 const serviceData: Record<string, { title: string; description: string; benefits: string[]; whatToExpect: string; meta: string; image: string }> = {
   "general-dentistry": {
     title: "General Dentistry",
