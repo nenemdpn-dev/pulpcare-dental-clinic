@@ -71,7 +71,7 @@ const BlogPost = () => {
     <Layout>
       <Seo
         title={`${post.title} | Pulpcare Dental Blog`}
-        description={post.title}
+        description={`${post.content[0].slice(0, 150).trim()}…`}
         path={`/blog/${slug}`}
         type="article"
         jsonLd={[
