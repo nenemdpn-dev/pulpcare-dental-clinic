@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import logo from "@/assets/pulpcare-logo.png";
 import whatsappIcon from "@/assets/whatsapp-icon.png";
+import { whatsappUrlForPath } from "@/lib/whatsapp";
 
 const quickLinks = [
   { label: "Home", path: "/" },
