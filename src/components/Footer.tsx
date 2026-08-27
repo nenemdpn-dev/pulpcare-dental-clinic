@@ -23,6 +23,8 @@ const serviceLinks = [
 ];
 
 const Footer = () => {
+  const { pathname } = useLocation();
+
   return (
     <footer className="bg-foreground text-primary-foreground">
       <div className="container-narrow mx-auto section-padding">
@@ -40,7 +42,7 @@ const Footer = () => {
               Your trusted partner for comprehensive dental care in Surulere, Lagos. We combine modern techniques with compassionate care for the whole family.
             </p>
             <a
-              href="https://wa.me/2348139994755?text=Hello%20Pulpcare!%20I%20would%20like%20to%20book%20an%20appointment."
+              href={whatsappUrlForPath(pathname)}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-pulpcare-success text-primary-foreground px-4 py-2 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
