@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import Seo from "@/components/Seo";
 
-const blogPosts: Record<string, { title: string; date: string; isoDate: string; category: string; content: string[]; image: string }> = {
+const blogPosts: Record<string, { title: string; seoTitle: string; date: string; isoDate: string; category: string; content: string[]; image: string }> = {
   "importance-of-regular-dental-checkups": {
     title: "Why Regular Dental Check-Ups Are Important for Your Health",
+    seoTitle: "Why Regular Dental Check-Ups Matter",
     date: "January 15, 2026",
     isoDate: "2026-01-15",
-    image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
+    image: "https://storage.googleapis.com/gpt-engineer-file-uploads/jatXiJBNNfWiteCTv5bLmh5LTmw1/social-images/social-1772609560219-IMG-20230830-WA0020.webp",
     category: "Preventive Care",
     content: [
       "Many Nigerians only visit the dentist when something hurts — a toothache, a broken filling, or swollen gums. While we're always happy to help in those situations, the truth is that regular dental check-ups can prevent most of these problems from occurring in the first place.",
@@ -22,9 +23,10 @@ const blogPosts: Record<string, { title: string; date: string; isoDate: string; 
   },
   "tips-for-childrens-dental-health": {
     title: "5 Tips to Keep Your Child's Teeth Healthy and Strong",
+    seoTitle: "5 Tips for Healthy Children's Teeth",
     date: "December 8, 2025",
     isoDate: "2025-12-08",
-    image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
+    image: "https://storage.googleapis.com/gpt-engineer-file-uploads/jatXiJBNNfWiteCTv5bLmh5LTmw1/social-images/social-1772609560219-IMG-20230830-WA0020.webp",
     category: "Paediatric Dentistry",
     content: [
       "As parents, we want the best for our children — and that includes their dental health. Starting good oral hygiene habits early sets the foundation for a lifetime of healthy smiles. Here are five practical tips every Nigerian parent should know.",
@@ -37,9 +39,10 @@ const blogPosts: Record<string, { title: string; date: string; isoDate: string; 
   },
   "what-to-do-in-dental-emergency": {
     title: "What to Do in a Dental Emergency: A Quick Guide",
+    seoTitle: "What to Do in a Dental Emergency",
     date: "November 22, 2025",
     isoDate: "2025-11-22",
-    image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
+    image: "https://storage.googleapis.com/gpt-engineer-file-uploads/jatXiJBNNfWiteCTv5bLmh5LTmw1/social-images/social-1772609560219-IMG-20230830-WA0020.webp",
     category: "Emergency Care",
     content: [
       "Dental emergencies can happen anytime — during a football match, while eating, or even in the middle of the night. Knowing what to do in those critical first minutes can mean the difference between saving and losing a tooth.",
@@ -47,7 +50,7 @@ const blogPosts: Record<string, { title: string; date: string; isoDate: string; 
       "Severe Toothache: Rinse your mouth with warm salt water. Use dental floss to remove any food trapped between teeth. Take over-the-counter pain medication as directed. Do not place aspirin directly on the gum — this can cause a chemical burn. See your dentist as soon as possible.",
       "Broken or Cracked Tooth: Rinse your mouth with warm water. Apply a cold compress to reduce swelling. Save any broken pieces. See your dentist immediately.",
       "Lost Filling or Crown: If you lose a filling, you can temporarily fill the cavity with sugar-free chewing gum. If a crown falls off, try to slip it back on with denture adhesive or toothpaste as a temporary measure. See your dentist promptly.",
-      "At Pulpcare Dental Clinic, we prioritise emergency cases and do our best to see you the same day. Save our number — +234 801 234 5678 — and don't hesitate to call or message us on WhatsApp if you have a dental emergency.",
+      "At Pulpcare Dental Clinic, we prioritise emergency cases and do our best to see you the same day. Save our number — 0813 999 4755 — and don't hesitate to call or message us on WhatsApp if you have a dental emergency.",
     ],
   },
 };
@@ -70,7 +73,7 @@ const BlogPost = () => {
   return (
     <Layout>
       <Seo
-        title={`${post.title} | Pulpcare Dental Blog`}
+        title={`${post.seoTitle} | Pulpcare Lagos`}
         description={`${post.content[0].slice(0, 150).trim()}…`}
         path={`/blog/${slug}`}
         type="article"
@@ -133,7 +136,7 @@ const BlogPost = () => {
           </motion.article>
 
           <div className="bg-pulpcare-light rounded-2xl p-8 text-center mt-12">
-            <h3 className="text-xl font-bold mb-3">Need Dental Care?</h3>
+            <h2 className="text-xl font-bold mb-3">Need Dental Care?</h2>
             <p className="text-muted-foreground mb-6">Book an appointment with our experienced team today.</p>
             <Link to="/book-appointment">
               <Button className="rounded-full px-8 font-semibold">Book Appointment</Button>
