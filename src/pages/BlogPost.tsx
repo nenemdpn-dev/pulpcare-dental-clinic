@@ -47,7 +47,7 @@ const blogPosts: Record<string, { title: string; date: string; isoDate: string; 
       "Severe Toothache: Rinse your mouth with warm salt water. Use dental floss to remove any food trapped between teeth. Take over-the-counter pain medication as directed. Do not place aspirin directly on the gum — this can cause a chemical burn. See your dentist as soon as possible.",
       "Broken or Cracked Tooth: Rinse your mouth with warm water. Apply a cold compress to reduce swelling. Save any broken pieces. See your dentist immediately.",
       "Lost Filling or Crown: If you lose a filling, you can temporarily fill the cavity with sugar-free chewing gum. If a crown falls off, try to slip it back on with denture adhesive or toothpaste as a temporary measure. See your dentist promptly.",
-      "At Pulpcare Dental Clinic, we prioritise emergency cases and do our best to see you the same day. Save our number — +234 801 234 5678 — and don't hesitate to call or message us on WhatsApp if you have a dental emergency.",
+      "At Pulpcare Dental Clinic, we prioritise emergency cases and do our best to see you the same day. Save our number — 0813 999 4755 — and don't hesitate to call or message us on WhatsApp if you have a dental emergency.",
     ],
   },
 };
@@ -133,7 +133,7 @@ const BlogPost = () => {
           </motion.article>
 
           <div className="bg-pulpcare-light rounded-2xl p-8 text-center mt-12">
-            <h3 className="text-xl font-bold mb-3">Need Dental Care?</h3>
+            <h2 className="text-xl font-bold mb-3">Need Dental Care?</h2>
             <p className="text-muted-foreground mb-6">Book an appointment with our experienced team today.</p>
             <Link to="/book-appointment">
               <Button className="rounded-full px-8 font-semibold">Book Appointment</Button>
