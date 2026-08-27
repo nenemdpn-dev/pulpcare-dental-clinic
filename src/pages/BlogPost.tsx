@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import Seo from "@/components/Seo";
 
-const blogPosts: Record<string, { title: string; date: string; isoDate: string; category: string; content: string[]; image: string }> = {
+const blogPosts: Record<string, { title: string; seoTitle: string; date: string; isoDate: string; category: string; content: string[]; image: string }> = {
   "importance-of-regular-dental-checkups": {
     title: "Why Regular Dental Check-Ups Are Important for Your Health",
+    seoTitle: "Why Regular Dental Check-Ups Matter",
     date: "January 15, 2026",
     isoDate: "2026-01-15",
     image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
@@ -22,6 +23,7 @@ const blogPosts: Record<string, { title: string; date: string; isoDate: string; 
   },
   "tips-for-childrens-dental-health": {
     title: "5 Tips to Keep Your Child's Teeth Healthy and Strong",
+    seoTitle: "5 Tips for Healthy Children's Teeth",
     date: "December 8, 2025",
     isoDate: "2025-12-08",
     image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
@@ -37,6 +39,7 @@ const blogPosts: Record<string, { title: string; date: string; isoDate: string; 
   },
   "what-to-do-in-dental-emergency": {
     title: "What to Do in a Dental Emergency: A Quick Guide",
+    seoTitle: "What to Do in a Dental Emergency",
     date: "November 22, 2025",
     isoDate: "2025-11-22",
     image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
@@ -70,7 +73,7 @@ const BlogPost = () => {
   return (
     <Layout>
       <Seo
-        title={`${post.title} | Pulpcare Dental Blog`}
+        title={`${post.seoTitle} | Pulpcare Lagos`}
         description={`${post.content[0].slice(0, 150).trim()}…`}
         path={`/blog/${slug}`}
         type="article"
