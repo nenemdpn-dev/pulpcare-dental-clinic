@@ -11,7 +11,7 @@ const blogPosts: Record<string, { title: string; seoTitle: string; date: string;
     seoTitle: "Why Regular Dental Check-Ups Matter",
     date: "January 15, 2026",
     isoDate: "2026-01-15",
-    image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
+    image: "https://storage.googleapis.com/gpt-engineer-file-uploads/jatXiJBNNfWiteCTv5bLmh5LTmw1/social-images/social-1772609560219-IMG-20230830-WA0020.webp",
     category: "Preventive Care",
     content: [
       "Many Nigerians only visit the dentist when something hurts — a toothache, a broken filling, or swollen gums. While we're always happy to help in those situations, the truth is that regular dental check-ups can prevent most of these problems from occurring in the first place.",
@@ -26,7 +26,7 @@ const blogPosts: Record<string, { title: string; seoTitle: string; date: string;
     seoTitle: "5 Tips for Healthy Children's Teeth",
     date: "December 8, 2025",
     isoDate: "2025-12-08",
-    image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
+    image: "https://storage.googleapis.com/gpt-engineer-file-uploads/jatXiJBNNfWiteCTv5bLmh5LTmw1/social-images/social-1772609560219-IMG-20230830-WA0020.webp",
     category: "Paediatric Dentistry",
     content: [
       "As parents, we want the best for our children — and that includes their dental health. Starting good oral hygiene habits early sets the foundation for a lifetime of healthy smiles. Here are five practical tips every Nigerian parent should know.",
@@ -42,7 +42,7 @@ const blogPosts: Record<string, { title: string; seoTitle: string; date: string;
     seoTitle: "What to Do in a Dental Emergency",
     date: "November 22, 2025",
     isoDate: "2025-11-22",
-    image: "https://pulpcaredentalclinic.lovable.app/favicon.png",
+    image: "https://storage.googleapis.com/gpt-engineer-file-uploads/jatXiJBNNfWiteCTv5bLmh5LTmw1/social-images/social-1772609560219-IMG-20230830-WA0020.webp",
     category: "Emergency Care",
     content: [
       "Dental emergencies can happen anytime — during a football match, while eating, or even in the middle of the night. Knowing what to do in those critical first minutes can mean the difference between saving and losing a tooth.",
