@@ -27,6 +27,7 @@ export type Database = {
           service: string
           source_ip_hash: string | null
           status: string
+          submission_key: string | null
           updated_at: string
         }
         Insert: {
@@ -41,6 +42,7 @@ export type Database = {
           service: string
           source_ip_hash?: string | null
           status?: string
+          submission_key?: string | null
           updated_at?: string
         }
         Update: {
@@ -55,6 +57,7 @@ export type Database = {
           service?: string
           source_ip_hash?: string | null
           status?: string
+          submission_key?: string | null
           updated_at?: string
         }
         Relationships: []

@@ -29,6 +29,7 @@ const BookingSchema = z.object({
   message: z.string().trim().max(1000).optional().or(z.literal('')),
   website: z.string().max(200).optional().default(''),
   form_started_at: z.number().int().positive(),
+  submission_key: z.string().uuid(),
 })
 
 const json = (body: Record<string, unknown>, status = 200) => new Response(JSON.stringify(body), {
@@ -144,13 +145,22 @@ Deno.serve(async (request) => {
         appointment_time: booking.appointment_time,
         message: booking.message || null,
         source_ip_hash: sourceIpHash,
+        submission_key: booking.submission_key,
       })
       .select('id')
       .single()
+    if (insertError?.code === '23505') return json({ ok: true, duplicate: true })
     if (insertError || !lead) throw insertError ?? new Error('Lead was not created')
 
-    await sendClinicEmail(booking, lead.id)
-    return json({ ok: true, lead_id: lead.id })
+    let emailSent = false
+    try {
+      await sendClinicEmail(booking, lead.id)
+      emailSent = true
+    } catch (emailError) {
+      console.error('Appointment email notification failed:', emailError)
+    }
+
+    return json({ ok: true, lead_id: lead.id, email_sent: emailSent })
   } catch (error) {
     console.error('Appointment submission failed:', error)
     return json({ error: 'We could not submit your request right now. Please call the clinic or try again.' }, 500)

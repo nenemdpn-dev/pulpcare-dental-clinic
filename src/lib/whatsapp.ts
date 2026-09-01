@@ -56,3 +56,21 @@ export function whatsappMessageForPath(pathname: string): string {
 export function whatsappUrlForPath(pathname: string): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessageForPath(pathname))}`;
 }
+
+export interface BookingWhatsAppDetails {
+  service: string;
+  appointmentDate: string;
+  appointmentTime: string;
+}
+
+export function whatsappUrlForBooking({ service, appointmentDate, appointmentTime }: BookingWhatsAppDetails): string {
+  const message = [
+    "Hello Pulpcare! I have submitted an appointment request.",
+    `Service: ${service}`,
+    `Preferred date: ${appointmentDate}`,
+    `Preferred time: ${appointmentTime}`,
+    "Please confirm my appointment.",
+  ].join("\n");
+
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
