@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { CalendarIcon, Clock, CheckCircle2 } from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
 import Seo from "@/components/Seo";
+import { whatsappUrlForBooking } from "@/lib/whatsapp";
 
 const services = [
   "General Dentistry",
@@ -31,15 +34,116 @@ const timeSlots = [
   "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM",
 ];
 
+const bookingSchema = z.object({
+  patient_name: z.string().trim().min(2, "Please enter your full name.").max(100, "Name must be 100 characters or fewer."),
+  patient_phone: z.string().trim().regex(/^[+()\d\s-]{7,20}$/, "Please enter a valid phone number."),
+  patient_email: z.string().trim().email("Please enter a valid email address.").max(255, "Email must be 255 characters or fewer."),
+  service: z.string().min(1, "Please select a service."),
+  appointment_date: z.string().min(1, "Please choose a preferred date."),
+  appointment_time: z.string().min(1, "Please select a preferred time."),
+  message: z.string().trim().max(1000, "Message must be 1,000 characters or fewer."),
+});
+
+type BookingDetails = z.infer<typeof bookingSchema>;
+type FormErrors = Partial<Record<keyof BookingDetails, string>>;
+
+const emailJsConfig = {
+  serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+  templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+  publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+};
+
+const makeBookingReference = () => {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
+  return `PULP-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+};
+
 const BookAppointment = () => {
   const [date, setDate] = useState<Date>();
+  const [service, setService] = useState("");
+  const [time, setTime] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<FormErrors>({});
+  const [bookingDetails, setBookingDetails] = useState<BookingDetails & { booking_reference: string }>();
+  const formStartedAt = useRef(Date.now());
+  const lastSubmissionAt = useRef(0);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const resetForm = () => {
+    setDate(undefined);
+    setService("");
+    setTime("");
+    setSubmitted(false);
+    setBookingDetails(undefined);
+    setSubmitError("");
+    setFieldErrors({});
+    formStartedAt.current = Date.now();
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    toast({ title: "Appointment Request Sent!", description: "We'll confirm your appointment shortly via phone or email." });
+    if (isSending) return;
+
+    const form = new FormData(e.currentTarget);
+    const values = {
+      patient_name: String(form.get("patient_name") ?? ""),
+      patient_phone: String(form.get("patient_phone") ?? ""),
+      patient_email: String(form.get("patient_email") ?? ""),
+      service,
+      appointment_date: date ? format(date, "yyyy-MM-dd") : "",
+      appointment_time: time,
+      message: String(form.get("message") ?? ""),
+    };
+
+    if (String(form.get("website") ?? "").trim()) return;
+
+    const result = bookingSchema.safeParse(values);
+    if (!result.success) {
+      const errors: FormErrors = {};
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0] as keyof BookingDetails;
+        if (!errors[field]) errors[field] = issue.message;
+      });
+      setFieldErrors(errors);
+      setSubmitError("Please check the highlighted fields and try again.");
+      return;
+    }
+
+    if (Date.now() - formStartedAt.current < 1500 || Date.now() - lastSubmissionAt.current < 10_000) {
+      setSubmitError("Please wait a moment before submitting your request.");
+      return;
+    }
+
+    setFieldErrors({});
+    setSubmitError("");
+    setIsSending(true);
+
+    const booking_reference = makeBookingReference();
+    const submitted_at = new Date().toISOString();
+    try {
+      if (!emailJsConfig.serviceId || !emailJsConfig.templateId || !emailJsConfig.publicKey) {
+        throw new Error("EmailJS is not configured");
+      }
+
+      await emailjs.send(emailJsConfig.serviceId, emailJsConfig.templateId, {
+        ...result.data,
+        submitted_at,
+        booking_reference,
+        subject: "New Appointment Request — Pulpcare Dental Clinic",
+        request_type: "APPOINTMENT REQUEST",
+      }, { publicKey: emailJsConfig.publicKey });
+
+      lastSubmissionAt.current = Date.now();
+      setBookingDetails({ ...result.data, booking_reference });
+      setSubmitted(true);
+      toast({ title: "Appointment Request Sent!", description: "We'll contact you to confirm your appointment." });
+    } catch {
+      setSubmitError("We couldn't send your appointment request right now. Please try again or contact Pulpcare Dental Clinic directly.");
+    } finally {
+      setIsSending(false);
+    }
   };
 
   if (submitted) {
@@ -50,11 +154,31 @@ const BookAppointment = () => {
             <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
               <CheckCircle2 className="w-20 h-20 text-pulpcare-success mx-auto mb-6" />
               <h1 className="text-3xl font-bold mb-4">Thank You!</h1>
-              <p className="text-muted-foreground mb-2">Your appointment request has been submitted successfully.</p>
+              <p className="text-muted-foreground mb-2">Appointment request sent successfully. Pulpcare Dental Clinic will contact you to confirm your appointment.</p>
               <p className="text-muted-foreground mb-8">Our team will contact you within 24 hours to confirm your appointment.</p>
-              <Button onClick={() => setSubmitted(false)} variant="outline" className="rounded-full px-6">
-                Book Another Appointment
-              </Button>
+              {bookingDetails && (
+                <div className="mb-8 space-y-1 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Request reference:</span> {bookingDetails.booking_reference}</p>
+                  <p><span className="font-medium text-foreground">Requested:</span> {bookingDetails.service} · {bookingDetails.appointment_date} · {bookingDetails.appointment_time}</p>
+                </div>
+              )}
+              <div className="flex flex-col sm:flex-row justify-center gap-3">
+                {bookingDetails && (
+                  <Button asChild className="rounded-full px-6">
+                    <a href={whatsappUrlForBooking({
+                      patientName: bookingDetails.patient_name,
+                      service: bookingDetails.service,
+                      appointmentDate: bookingDetails.appointment_date,
+                      appointmentTime: bookingDetails.appointment_time,
+                    })} target="_blank" rel="noopener noreferrer">
+                      Continue on WhatsApp
+                    </a>
+                  </Button>
+                )}
+                <Button onClick={resetForm} variant="outline" className="rounded-full px-6">
+                  Book Another Appointment
+                </Button>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -91,29 +215,33 @@ const BookAppointment = () => {
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name *</Label>
-                <Input id="name" placeholder="e.g. Adaeze Okafor" required />
+                <Input id="name" name="patient_name" placeholder="e.g. Adaeze Okafor" required aria-invalid={Boolean(fieldErrors.patient_name)} />
+                {fieldErrors.patient_name && <p className="text-sm text-destructive">{fieldErrors.patient_name}</p>}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="phone">Phone Number *</Label>
-                <Input id="phone" type="tel" placeholder="+234 801 234 5678" required />
+                <Input id="phone" name="patient_phone" type="tel" placeholder="+234 801 234 5678" required aria-invalid={Boolean(fieldErrors.patient_phone)} />
+                {fieldErrors.patient_phone && <p className="text-sm text-destructive">{fieldErrors.patient_phone}</p>}
               </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
-              <Input id="email" type="email" placeholder="you@email.com" />
+              <Input id="email" name="patient_email" type="email" placeholder="you@email.com" required aria-invalid={Boolean(fieldErrors.patient_email)} />
+              {fieldErrors.patient_email && <p className="text-sm text-destructive">{fieldErrors.patient_email}</p>}
             </div>
 
             <div className="space-y-2">
               <Label>Service Required *</Label>
-              <Select required>
-                <SelectTrigger><SelectValue placeholder="Select a service" /></SelectTrigger>
+              <Select value={service} onValueChange={setService} required>
+                <SelectTrigger aria-invalid={Boolean(fieldErrors.service)}><SelectValue placeholder="Select a service" /></SelectTrigger>
                 <SelectContent>
                   {services.map((s) => (
                     <SelectItem key={s} value={s}>{s}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
+              {fieldErrors.service && <p className="text-sm text-destructive">{fieldErrors.service}</p>}
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6">
@@ -121,7 +249,7 @@ const BookAppointment = () => {
                 <Label>Preferred Date *</Label>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}>
+                    <Button type="button" variant="outline" aria-invalid={Boolean(fieldErrors.appointment_date)} className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}>
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {date ? format(date, "PPP") : "Pick a date"}
                     </Button>
@@ -137,11 +265,12 @@ const BookAppointment = () => {
                     />
                   </PopoverContent>
                 </Popover>
+                {fieldErrors.appointment_date && <p className="text-sm text-destructive">{fieldErrors.appointment_date}</p>}
               </div>
               <div className="space-y-2">
                 <Label>Preferred Time *</Label>
-                <Select required>
-                  <SelectTrigger>
+                <Select value={time} onValueChange={setTime} required>
+                  <SelectTrigger aria-invalid={Boolean(fieldErrors.appointment_time)}>
                     <SelectValue placeholder="Select time">
                       <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4" />
@@ -155,16 +284,24 @@ const BookAppointment = () => {
                     ))}
                   </SelectContent>
                 </Select>
+                {fieldErrors.appointment_time && <p className="text-sm text-destructive">{fieldErrors.appointment_time}</p>}
               </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="message">Additional Message</Label>
-              <Textarea id="message" placeholder="Tell us about your dental concern or any special requirements..." rows={4} />
+              <Textarea id="message" name="message" placeholder="Tell us about your dental concern or any special requirements..." rows={4} maxLength={1000} aria-invalid={Boolean(fieldErrors.message)} />
+              {fieldErrors.message && <p className="text-sm text-destructive">{fieldErrors.message}</p>}
             </div>
 
-            <Button type="submit" size="lg" className="w-full rounded-full font-semibold h-12 text-base">
-              Submit Appointment Request
+            <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <Input id="website" name="website" tabIndex={-1} autoComplete="off" />
+            </div>
+
+            {submitError && <p role="alert" className="text-sm text-destructive">{submitError}</p>}
+            <Button type="submit" size="lg" disabled={isSending} className="w-full rounded-full font-semibold h-12 text-base">
+              {isSending ? "Sending appointment request..." : "Submit Appointment Request"}
             </Button>
 
             <p className="text-xs text-center text-muted-foreground">
