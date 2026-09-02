@@ -58,18 +58,20 @@ export function whatsappUrlForPath(pathname: string): string {
 }
 
 export interface BookingWhatsAppDetails {
+  patientName: string;
   service: string;
   appointmentDate: string;
   appointmentTime: string;
 }
 
-export function whatsappUrlForBooking({ service, appointmentDate, appointmentTime }: BookingWhatsAppDetails): string {
+export function whatsappUrlForBooking({ patientName, service, appointmentDate, appointmentTime }: BookingWhatsAppDetails): string {
   const message = [
-    "Hello Pulpcare! I have submitted an appointment request.",
+    "Hello Pulpcare! I have submitted an appointment request through the Pulpcare website.",
+    `Patient name: ${patientName}`,
     `Service: ${service}`,
     `Preferred date: ${appointmentDate}`,
     `Preferred time: ${appointmentTime}`,
-    "Please confirm my appointment.",
+    "Please contact me to confirm the appointment request.",
   ].join("\n");
 
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
