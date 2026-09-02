@@ -67,6 +67,7 @@ const BookAppointment = () => {
   const [submitError, setSubmitError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<FormErrors>({});
   const [bookingDetails, setBookingDetails] = useState<BookingDetails & { booking_reference: string }>();
+  const formRef = useRef<HTMLFormElement>(null);
   const formStartedAt = useRef(Date.now());
   const lastSubmissionAt = useRef(0);
   const { toast } = useToast();
@@ -136,6 +137,10 @@ const BookAppointment = () => {
       }, { publicKey: emailJsConfig.publicKey });
 
       lastSubmissionAt.current = Date.now();
+      formRef.current?.reset();
+      setDate(undefined);
+      setService("");
+      setTime("");
       setBookingDetails({ ...result.data, booking_reference });
       setSubmitted(true);
       toast({ title: "Appointment Request Sent!", description: "We'll contact you to confirm your appointment." });
@@ -209,6 +214,7 @@ const BookAppointment = () => {
           <motion.form
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            ref={formRef}
             onSubmit={handleSubmit}
             className="space-y-6 bg-card border border-border rounded-2xl p-6 md:p-10 shadow-lg"
           >
