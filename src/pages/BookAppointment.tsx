@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
 import Seo from "@/components/Seo";
 import { whatsappUrlForBooking } from "@/lib/whatsapp";
+import whatsappIcon from "@/assets/whatsapp-icon.png";
 
 const services = [
   "General Dentistry",
