@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
 import Seo from "@/components/Seo";
 import { whatsappUrlForBooking } from "@/lib/whatsapp";
+import whatsappIcon from "@/assets/whatsapp-icon.png";
 
 const services = [
   "General Dentistry",
@@ -178,29 +179,44 @@ const BookAppointment = () => {
               <h1 className="text-3xl font-bold mb-4">Thank You!</h1>
               <p className="text-muted-foreground mb-2">Appointment request sent successfully. Pulpcare Dental Clinic will contact you to confirm your appointment.</p>
               <p className="text-muted-foreground mb-8">Our team will contact you within 24 hours to confirm your appointment.</p>
+
               {bookingDetails && (
-                <div className="mb-8 space-y-1 text-sm text-muted-foreground">
+                <div className="max-w-xs mx-auto mb-6">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="w-full rounded-full font-semibold h-14 text-base bg-pulpcare-success hover:bg-pulpcare-success/90 text-white shadow-lg hover:shadow-xl transition-shadow"
+                  >
+                    <a
+                      href={whatsappUrlForBooking({
+                        patientName: bookingDetails.patient_name,
+                        service: bookingDetails.service,
+                        appointmentDate: bookingDetails.appointment_date,
+                        appointmentTime: bookingDetails.appointment_time,
+                      })}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Continue your appointment request on WhatsApp"
+                      className="inline-flex items-center justify-center gap-3"
+                    >
+                      <img src={whatsappIcon} alt="" className="w-6 h-6 shrink-0" />
+                      Continue on WhatsApp
+                    </a>
+                  </Button>
+                  <p className="mt-2 text-xs text-muted-foreground">Click to open WhatsApp and send your appointment details.</p>
+                </div>
+              )}
+
+              {bookingDetails && (
+                <div className="mb-6 space-y-1 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Request reference:</span> {bookingDetails.booking_reference}</p>
                   <p><span className="font-medium text-foreground">Requested:</span> {bookingDetails.service} · {bookingDetails.appointment_date} · {bookingDetails.appointment_time}</p>
                 </div>
               )}
-              <div className="flex flex-col sm:flex-row justify-center gap-3">
-                {bookingDetails && (
-                  <Button asChild className="rounded-full px-6">
-                    <a href={whatsappUrlForBooking({
-                      patientName: bookingDetails.patient_name,
-                      service: bookingDetails.service,
-                      appointmentDate: bookingDetails.appointment_date,
-                      appointmentTime: bookingDetails.appointment_time,
-                    })} target="_blank" rel="noopener noreferrer">
-                      Continue on WhatsApp
-                    </a>
-                  </Button>
-                )}
-                <Button onClick={resetForm} variant="outline" className="rounded-full px-6">
-                  Book Another Appointment
-                </Button>
-              </div>
+
+              <Button onClick={resetForm} variant="outline" className="rounded-full px-6">
+                Book Another Appointment
+              </Button>
             </motion.div>
           </div>
         </section>
