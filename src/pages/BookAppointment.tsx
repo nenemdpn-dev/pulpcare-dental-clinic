@@ -155,7 +155,12 @@ const BookAppointment = () => {
       setTime("");
       setBookingDetails({ ...result.data, booking_reference });
       setSubmitted(true);
-      toast({ title: "Appointment Request Sent!", description: "We'll contact you to confirm your appointment." });
+      toast({
+        title: "Appointment Request Sent!",
+        description: patientAckSent
+          ? "We've emailed you an acknowledgement and will contact you to confirm your appointment."
+          : "Request received by the clinic. We'll contact you to confirm your appointment.",
+      });
     } catch {
       setSubmitError("We couldn't send your appointment request right now. Please try again or contact Pulpcare Dental Clinic directly.");
     } finally {
