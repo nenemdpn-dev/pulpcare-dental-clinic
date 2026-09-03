@@ -49,7 +49,8 @@ type FormErrors = Partial<Record<keyof BookingDetails, string>>;
 
 const emailJsConfig = {
   serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
-  templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+  patientTemplateId: import.meta.env.VITE_EMAILJS_PATIENT_TEMPLATE_ID,
+  clinicTemplateId: import.meta.env.VITE_EMAILJS_CLINIC_TEMPLATE_ID,
   publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
 };
 
@@ -124,17 +125,28 @@ const BookAppointment = () => {
     const booking_reference = makeBookingReference();
     const submitted_at = new Date().toISOString();
     try {
-      if (!emailJsConfig.serviceId || !emailJsConfig.templateId || !emailJsConfig.publicKey) {
+      if (!emailJsConfig.serviceId || !emailJsConfig.patientTemplateId || !emailJsConfig.clinicTemplateId || !emailJsConfig.publicKey) {
         throw new Error("EmailJS is not configured");
       }
 
-      await emailjs.send(emailJsConfig.serviceId, emailJsConfig.templateId, {
+      const templateParams = {
         ...result.data,
         submitted_at,
         booking_reference,
         subject: "New Appointment Request — Pulpcare Dental Clinic",
         request_type: "APPOINTMENT REQUEST",
-      }, { publicKey: emailJsConfig.publicKey });
+      };
+
+      // 1) Clinic notification (required — must succeed before we claim success)
+      await emailjs.send(emailJsConfig.serviceId, emailJsConfig.clinicTemplateId, templateParams, { publicKey: emailJsConfig.publicKey });
+
+      // 2) Patient acknowledgement (best-effort — clinic already received the request)
+      let patientAckSent = true;
+      try {
+        await emailjs.send(emailJsConfig.serviceId, emailJsConfig.patientTemplateId, templateParams, { publicKey: emailJsConfig.publicKey });
+      } catch {
+        patientAckSent = false;
+      }
 
       lastSubmissionAt.current = Date.now();
       formRef.current?.reset();
@@ -143,7 +155,12 @@ const BookAppointment = () => {
       setTime("");
       setBookingDetails({ ...result.data, booking_reference });
       setSubmitted(true);
-      toast({ title: "Appointment Request Sent!", description: "We'll contact you to confirm your appointment." });
+      toast({
+        title: "Appointment Request Sent!",
+        description: patientAckSent
+          ? "We've emailed you an acknowledgement and will contact you to confirm your appointment."
+          : "Request received by the clinic. We'll contact you to confirm your appointment.",
+      });
     } catch {
       setSubmitError("We couldn't send your appointment request right now. Please try again or contact Pulpcare Dental Clinic directly.");
     } finally {
